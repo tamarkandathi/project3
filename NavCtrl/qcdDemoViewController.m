@@ -8,6 +8,9 @@
 
 #import "qcdDemoViewController.h"
 #import "ChildViewController.h"
+#import "Company.h"
+#import "Product.h"
+#import "DataAccessObject.h"
 
 @interface qcdDemoViewController ()
 
@@ -36,15 +39,17 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     
-    //2. add two more companies
-    self.companyList = [[NSMutableArray alloc]
-                       initWithObjects:@"Apple mobile devices",
-                       @"Samsung mobile devices",@"Motorola mobile devices",@"HTC mobile devices", nil];
-    NSLog(@"company list %@",self.companyList);
+    //singleton - READ ABOUT THIS !!!!!!!!!
+    static dispatch_once_t dispatch = 0;
+    dispatch_once (&dispatch, ^{
+        self.dao = [[DataAccessObject alloc] init];
+    });
+    
+    [self.dao someMethod];
+    
+    self.companyList = self.dao.companyList;
     
     self.title = @"Mobile device makers";
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,22 +83,12 @@
     }
     
     // Configure the cell...
+    Company *company = [self.companyList objectAtIndex:[indexPath row]];
     
-    cell.textLabel.text = [self.companyList objectAtIndex:[indexPath row]];
+    cell.textLabel.text = company.companyName;
     
     //4. show the logo for each company : set images for each row based on the company in that row
-   
-
-    if ([cell.textLabel.text isEqualToString:@"Apple mobile devices"]) {
-        [[cell imageView] setImage:[UIImage imageNamed:@"AppleLogo.png"]];
-    } else if ([cell.textLabel.text isEqualToString:@"Samsung mobile devices"]){
-        [[cell imageView] setImage:[UIImage imageNamed:@"SamsungLogo.jpeg"]];
-    } else if ([cell.textLabel.text isEqualToString:@"Motorola mobile devices"]){
-        [[cell imageView] setImage:[UIImage imageNamed:@"MotorolaLogo.jpeg"]];
-    } else {
-        [[cell imageView] setImage:[UIImage imageNamed:@"HTCLogo.jpeg" ]];
-    }
-        
+    [[cell imageView] setImage:[UIImage imageNamed:company.companyLogo]];    
     
     return cell;
 }
@@ -151,8 +146,9 @@
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    self.childVC.title = [NSString stringWithFormat:@"%@",[self.companyList objectAtIndex:indexPath.row]];
+    Company *company = [self.companyList objectAtIndex:indexPath.row];
+    [self.childVC setProducts:company.companyProducts];
+    self.childVC.title = company.companyName;
     
     [self.navigationController
      pushViewController:self.childVC
