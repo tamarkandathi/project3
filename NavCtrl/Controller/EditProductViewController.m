@@ -1,22 +1,22 @@
 //
-//  Product.m
+//  EditProductViewController.m
 //  NavCtrl
 //
-//  Created by Tamar on 10/7/15.
+//  Created by Tamar on 10/14/15.
 //  Copyright © 2015 Aditya Narayan. All rights reserved.
 //
 
-#import "Product.h"
+#import "EditProductViewController.h"
 
-@interface Product ()
+@interface EditProductViewController ()
 
 @end
 
-@implementation Product
+@implementation EditProductViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,4 +34,17 @@
 }
 */
 
+- (void)dealloc {
+    [_userInput release];
+    [super dealloc];
+}
+- (IBAction)editProductName:(id)sender {
+    Product *userSelectedProduct = [self.products objectAtIndex:self.editPosition.row];
+    userSelectedProduct.productName = self.userInput.text;
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end
+
+
+
+

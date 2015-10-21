@@ -10,13 +10,14 @@
 #import "Company.h"
 #import "Product.h"
 
+//do we need class category here?
 @interface DataAccessObject ()
 
 @end
 
 @implementation DataAccessObject
 
--(void)someMethod {
+-(void)loadData {
     // Dispose of any resources that can be recreated.
     Company *apple = [[Company alloc]init];
     Company *samsung = [[Company alloc]init];
@@ -28,6 +29,7 @@
     
     apple.companyName = @"Apple mobile devices";
     apple.companyLogo = @"AppleLogo.png";
+    apple.companyStockCode = @"AAPL";
     
     Product *iPad = [[Product alloc] init];
     Product *iPodTouch = [[Product alloc] init];
@@ -44,12 +46,14 @@
     iPhone.productLogo = @"iPhone.jpeg";
     iPhone.productName = @"iPhone";
     iPhone.productUrl = @"https://www.apple.com/iphone/";
+    
     apple.companyProducts = [NSMutableArray arrayWithObjects:iPad,iPodTouch,iPhone, nil];
     
     
     // Company Samsung
     samsung.companyName = @"Samsung mobile devices";
     samsung.companyLogo = @"SamsungLogo.jpeg";
+    samsung.companyStockCode = @"005930.KS";
     
     Product *galaxyS4 = [[Product alloc]init];
     Product *galaxyNote = [[Product alloc]init];
@@ -74,6 +78,8 @@
     
     motorola.companyName = @"Motorola mobile devices";
     motorola.companyLogo = @"MotorolaLogo.jpeg";
+    motorola.companyStockCode = @"066570.KS";
+    
     Product *droidTurbo = [[Product alloc] init];
     Product *droid3 = [[Product alloc]init];
     Product *droidMax = [[Product alloc]init];
@@ -94,6 +100,8 @@
     // Company HTC
     htc.companyName = @"HTC mobile devices";
     htc.companyLogo = @"HTCLogo.jpeg";
+    htc.companyStockCode = @"2498.TW";
+    
     Product *droidDna =[[Product alloc]init];
     Product *oneM8 = [[Product alloc]init];
     Product *desire816 = [[Product alloc]init];
@@ -109,29 +117,16 @@
     
     htc.companyProducts = [NSMutableArray arrayWithObjects:droidDna, oneM8, desire816, nil];
     
-    self.companyList = [NSMutableArray arrayWithArray: @[apple, samsung, motorola, htc]];
+    self.companies = [NSMutableArray arrayWithArray: @[apple, samsung, motorola, htc]];
     
 }
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+-(void)updateStockPrices {
     
+    for(int i = 0;i < [self.companies count];i++) {
+        
+        [self.companies[i] setCompanyStockCode:self.companyStockPrices[i]];
+    }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

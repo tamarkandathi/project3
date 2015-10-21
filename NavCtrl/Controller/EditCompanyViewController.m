@@ -1,22 +1,22 @@
 //
-//  Company.m
+//  EditCompanyViewController.m
 //  NavCtrl
 //
-//  Created by Tamar on 10/7/15.
+//  Created by Tamar on 10/14/15.
 //  Copyright © 2015 Aditya Narayan. All rights reserved.
 //
 
-#import "Company.h"
+#import "EditCompanyViewController.h"
 
-@interface Company ()
+@interface EditCompanyViewController ()
 
 @end
 
-@implementation Company
+@implementation EditCompanyViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,5 +33,17 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)editCompanyName:(id)sender {
+
+    NSLog(@"%ld",(long)self.editPosition.row);
+    
+    Company *userSelectedCompany = [self.companies objectAtIndex:self.editPosition.row];
+    userSelectedCompany.companyName = self.userInput.text;
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
 
 @end

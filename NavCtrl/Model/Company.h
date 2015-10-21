@@ -6,13 +6,15 @@
 //  Copyright © 2015 Aditya Narayan. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "Product.h"
+#import <Foundation/Foundation.h>
 
-@interface Company : UIViewController
+@interface Company : NSObject
 
 @property (retain,nonatomic) NSMutableArray *companyProducts;
 @property (retain, nonatomic) NSString *companyName;
 @property (retain, nonatomic) NSString *companyLogo;
+@property (retain, nonatomic) NSMutableArray *companyStockPrices;
+@property (retain , nonatomic) NSString *companyStockCode;
+
 
 @end

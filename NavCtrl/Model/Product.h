@@ -6,9 +6,9 @@
 //  Copyright © 2015 Aditya Narayan. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface Product : UIViewController
+@interface Product : NSObject
 @property (retain, nonatomic) NSString *productName;
 @property (retain,nonatomic) NSString *productLogo;
 @property(retain, nonatomic) NSString *productUrl;
