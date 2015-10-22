@@ -124,7 +124,7 @@
     
     for(int i = 0;i < [self.companies count];i++) {
         
-        [self.companies[i] setCompanyStockCode:self.companyStockPrices[i]];
+        [self.companies[i] setCompanyStockPrice:self.companyStockPrices[i]];
     }
 }
 

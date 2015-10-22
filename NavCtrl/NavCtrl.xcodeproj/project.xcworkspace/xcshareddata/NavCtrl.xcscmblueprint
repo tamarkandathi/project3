@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2D59657DF8E59558FD0F44614E10C7EF0EB671E2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2D59657DF8E59558FD0F44614E10C7EF0EB671E2" : 0,
+    "C3C07157E418BD54613832399BB7F30A3C17E3C4" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D0729AEF-E34B-4217-8C85-F92438983AB8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2D59657DF8E59558FD0F44614E10C7EF0EB671E2" : "NavCtrl\/",
+    "C3C07157E418BD54613832399BB7F30A3C17E3C4" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "NavCtrl",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "NavCtrl.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tamarkandathi\/project3\/tree\/assignment3",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2D59657DF8E59558FD0F44614E10C7EF0EB671E2"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tamarkandathi\/project3.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C3C07157E418BD54613832399BB7F30A3C17E3C4"
+    }
+  ]
+}

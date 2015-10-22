@@ -173,7 +173,7 @@
     
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@", company.companyName];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",company.companyStockCode];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",company.companyStockPrice];
     
     
     //4. show the logo for each company : set images for each row based on the company in that row

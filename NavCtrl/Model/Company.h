@@ -15,6 +15,7 @@
 @property (retain, nonatomic) NSString *companyLogo;
 @property (retain, nonatomic) NSMutableArray *companyStockPrices;
 @property (retain , nonatomic) NSString *companyStockCode;
+@property (retain, nonatomic) NSString *companyStockPrice;
 
 
 @end
