@@ -47,6 +47,7 @@
     //    longPress.delegate = self;
     [self.tableView addGestureRecognizer:longPress];
     [longPress release];
+    self.dao = [DataAccessObject sharedInstance];
     
 
 }
@@ -161,7 +162,9 @@
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [tableView beginUpdates];
         [tableView endUpdates];
-    }   
+        [self.dao save];
+
+    }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

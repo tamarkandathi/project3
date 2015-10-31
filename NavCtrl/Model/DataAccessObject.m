@@ -7,15 +7,29 @@
 //
 
 #import "DataAccessObject.h"
-#import "Company.h"
-#import "Product.h"
+
 
 //do we need class category here?
-@interface DataAccessObject ()
 
-@end
 
 @implementation DataAccessObject
+
++(instancetype)sharedInstance
+{
+    
+    static dispatch_once_t cp_singleton_once_token;
+    
+    static DataAccessObject *sharedInstance;
+    
+    dispatch_once(&cp_singleton_once_token, ^{
+        
+        sharedInstance = [[self alloc] init];
+        
+    });
+    
+    return sharedInstance;
+    
+}
 
 -(void)loadData {
     // Dispose of any resources that can be recreated.
@@ -117,15 +131,58 @@
     
     htc.companyProducts = [NSMutableArray arrayWithObjects:droidDna, oneM8, desire816, nil];
     
-    self.companies = [NSMutableArray arrayWithArray: @[apple, samsung, motorola, htc]];
+    self.companies = [@[apple, samsung, motorola, htc] mutableCopy];
     
 }
+
+
 -(void)updateStockPrices {
     
     for(int i = 0;i < [self.companies count];i++) {
-        
         [self.companies[i] setCompanyStockPrice:self.companyStockPrices[i]];
     }
+}
+
+-(void) archiveObjects:(NSString*) filepath {
+    
+    
+    [NSKeyedArchiver archiveRootObject:self.companies toFile:filepath];
+    
+}
+
+-(NSString*) getPropertyListPath {
+    NSURL *docDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+    NSURL *plist = [docDirectory URLByAppendingPathComponent:@"companies.plist"];
+    NSLog(@"%@",plist.path);
+    self.plistPath=plist.path;
+    return plist.path;
+    
+}
+
+-(void)save{
+    [self archiveObjects:self.plistPath];
+}
+-(void) unarchiveSavedObjects: (NSString *)filePath {
+    self.companies = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+    NSLog(@"%@",self.companies);
+    for (int i = 0; i < [self.companies count]; i++) {
+        NSLog(@"For Company Name = %@",[[self.companies objectAtIndex:i] companyName]);
+    }
+    NSLog(@"Unarchive");
+}
+
+
+-(void) loadCompanies {
+    NSString *filePath = [self getPropertyListPath];
+    NSLog(@"%@",filePath);
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        [self unarchiveSavedObjects:filePath];
+    }
+    else {
+        [self loadData];
+        [self archiveObjects: filePath];
+   }
 }
 
 

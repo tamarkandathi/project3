@@ -18,8 +18,17 @@
     userAddedCompany.companyName = self.userInput.text;
     userAddedCompany.companyLogo = @"defaultCompanyLogo.jpeg";
     
+    if ([self.userInputStockCode.text isEqualToString:@""]) {
+        userAddedCompany.companyStockCode = @"N/A";
+    } else {
+        userAddedCompany.companyStockCode = self.userInputStockCode.text;
+    }
+    NSLog(@"Hello - %@",self.userInputStockCode.text);
+
     userAddedCompany.companyProducts = [[NSMutableArray alloc]init];
     [self.companies addObject:userAddedCompany];
+    self.dao = [DataAccessObject sharedInstance];
+    [self.dao save];
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -45,4 +54,9 @@
 */
 
 
+- (void)dealloc {
+    [_stockCodeLabel release];
+    [_userInputStockCode release];
+    [super dealloc];
+}
 @end

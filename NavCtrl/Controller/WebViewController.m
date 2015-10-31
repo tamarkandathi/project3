@@ -22,6 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.webView = [[WKWebView alloc] initWithFrame:self.view.frame];
+    
     NSURLRequest *request = [NSURLRequest requestWithURL: self.pageUrl];
     [self.webView loadRequest:request];
     self.view = self.webView;

@@ -17,6 +17,7 @@
 @property (nonatomic,strong) NSMutableArray *products;
 @property (retain, nonatomic) IBOutlet UITextField *userInput;
 @property (nonatomic,strong) Company *compNew;
+@property (nonatomic, retain) DataAccessObject *dao;
 
 - (IBAction)add:(id)sender;
 

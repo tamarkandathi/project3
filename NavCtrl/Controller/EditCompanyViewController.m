@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,6 +41,8 @@
     
     Company *userSelectedCompany = [self.companies objectAtIndex:self.editPosition.row];
     userSelectedCompany.companyName = self.userInput.text;
+    self.dao = [DataAccessObject sharedInstance]; 
+    [self.dao save];
     
     [self.navigationController popViewControllerAnimated:YES];
     

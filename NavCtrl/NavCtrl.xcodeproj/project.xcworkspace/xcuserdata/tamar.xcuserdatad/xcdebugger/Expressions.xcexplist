@@ -16,5 +16,16 @@
       <ContextState
          contextName = "-[qcdDemoViewController tableView:didSelectRowAtIndexPath:]:qcdDemoViewController.m">
       </ContextState>
+      <ContextState
+         contextName = "-[qcdDemoViewController tableView:moveRowAtIndexPath:toIndexPath:]:qcdDemoViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[DataAccessObject archiveObjects]:DataAccessObject.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.companies">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -25,6 +25,15 @@
 }
 
 
+- (NSMutableArray *)companies
+{
+    if (!_companies) {
+        _companies = [NSMutableArray new];
+    }
+    
+    return _companies;
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -46,14 +55,12 @@
     
     
     
-    //singleton - READ ABOUT THIS !!!!!!!!!
-    static dispatch_once_t dispatch = 0;
-    dispatch_once (&dispatch, ^{
-        self.dao = [[DataAccessObject alloc] init];
-    });
+    self.dao = [DataAccessObject sharedInstance];
     
-    [self.dao loadData];
+    // don't use load data here because it every time loaded same data from dao
+    //[self.dao getCompanies];
     
+    [self.dao loadCompanies];
     self.companies = self.dao.companies;
     
     self.title = @"Mobile device makers";
@@ -89,8 +96,6 @@
         
         [self.navigationController pushViewController:editCompViewController animated:YES];
     }
-    
-    
 }
 
 #pragma mark - Table view data source
@@ -117,6 +122,7 @@
     }
     
     stockCodesURL = [NSString stringWithFormat:@"http://finance.yahoo.com/d/quotes.csv?s=%@&f=a",stockCodesURL];
+    NSLog(@"%@",stockCodesURL);
     
     
     NSURLSession *session = [NSURLSession sharedSession];
@@ -128,7 +134,9 @@
             NSLog(@"Perfect! \n\n");
             NSString *stockString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             self.companyStockPrices = (NSMutableArray*)[stockString componentsSeparatedByString:@"\n"];
-
+            
+            
+            
             [self.companyStockPrices removeLastObject];
             NSLog(@"%@", self.companyStockPrices);
             self.dao.companyStockPrices = self.companyStockPrices;
@@ -177,7 +185,7 @@
     
     
     //4. show the logo for each company : set images for each row based on the company in that row
-    [[cell imageView] setImage:[UIImage imageNamed:company.companyLogo]];    
+    [[cell imageView] setImage:[UIImage imageNamed:company.companyLogo]];
     
     return cell;
 }
@@ -200,6 +208,8 @@
         
         [self.companies removeObjectAtIndex: indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.dao save];
+
 
 //       [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
     }
@@ -213,21 +223,31 @@
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+    NSLog(@"%@",self.companies);
     id buffer = [self.companies objectAtIndex:fromIndexPath.row];
+    [buffer retain];
     [self.companies removeObjectAtIndex:fromIndexPath.row];
+    NSLog(@"%li", (long)toIndexPath.row);
     [self.companies insertObject:buffer atIndex:toIndexPath.row];
+    [buffer release];
     
+    NSLog(@"%@", self.companies);
+    [self.dao save];
+
+//    NSLog(@"fromIndexPath.row = %lu \n", fromIndexPath.row);
+//    NSLog(@"to.row = %lu \n", toIndexPath.row);
+//    [self.companies exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
 }
 
 
-/*
+
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
 }
-*/
+
 
 
 #pragma mark - Table view delegate

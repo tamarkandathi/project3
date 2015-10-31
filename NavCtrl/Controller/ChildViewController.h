@@ -10,6 +10,7 @@
 #import "AddProductViewController.h"
 #import "Company.h"
 #import "EditProductViewController.h"
+#import "DataAccessObject.h"
 
 @class WebViewController;
 
@@ -19,4 +20,6 @@
 @property (nonatomic, retain) NSMutableArray *products;
 @property (nonatomic, strong) Company *compNew;
 @property (nonatomic,retain) NSIndexPath *editPosition;
+@property (nonatomic, retain) DataAccessObject *dao;
+
 @end

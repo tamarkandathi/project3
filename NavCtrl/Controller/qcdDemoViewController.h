@@ -17,9 +17,7 @@
 
 @property (nonatomic, retain) NSMutableArray *companies;
 @property (nonatomic, retain) NSMutableArray *companyLogos;
-//@property (retain, nonatomic) NSMutableArray *companyStockCodes;
 @property (nonatomic, retain) NSMutableArray *companyStockPrices;
-//@property double companyStockPrice;
 @property (nonatomic, retain) IBOutlet  ChildViewController *childVC;
 @property (nonatomic, retain) DataAccessObject *dao;
 @property (nonatomic, retain) NSIndexPath *editPosition;

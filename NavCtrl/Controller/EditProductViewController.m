@@ -41,6 +41,7 @@
 - (IBAction)editProductName:(id)sender {
     Product *userSelectedProduct = [self.products objectAtIndex:self.editPosition.row];
     userSelectedProduct.productName = self.userInput.text;
+    [self.dao save];
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end

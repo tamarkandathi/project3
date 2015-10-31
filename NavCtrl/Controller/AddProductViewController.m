@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,6 +49,9 @@
     userAddedProduct.productLogo = @"defaultProdLogo.png";
     
     [self.compNew.companyProducts addObject:userAddedProduct];
+    self.dao = [DataAccessObject sharedInstance];
+    [self.dao save];
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 @end
