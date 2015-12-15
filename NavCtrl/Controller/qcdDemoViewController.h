@@ -7,19 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataAccessObject.h"
-#import "AddCompanyViewController.h"
-#import "EditCompanyViewController.h"
-
+@class DataAccessObject;
+@class AddCompanyViewController;
+@class EditCompanyViewController;
 @class ChildViewController;
 
 @interface qcdDemoViewController : UITableViewController
 
-@property (nonatomic, retain) NSMutableArray *companies;
-@property (nonatomic, retain) NSMutableArray *companyLogos;
-@property (nonatomic, retain) NSMutableArray *companyStockPrices;
-@property (nonatomic, retain) IBOutlet  ChildViewController *childVC;
-@property (nonatomic, retain) DataAccessObject *dao;
-@property (nonatomic, retain) NSIndexPath *editPosition;
+@property (retain, nonatomic) IBOutlet  ChildViewController *childVC;
+@property (retain, nonatomic) NSIndexPath *indexPath;
 
 @end

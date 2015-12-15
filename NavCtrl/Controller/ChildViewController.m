@@ -5,35 +5,20 @@
 //  Created by Aditya Narayan on 10/22/13.
 //  Copyright (c) 2013 Aditya Narayan. All rights reserved.
 //
-
+#import "EditProductViewController.h"
+#import "DataAccessObject.h"
+#import "AddProductViewController.h"
 #import "ChildViewController.h"
 #import "WebViewController.h"
 #import "Company.h"
 #import "Product.h"
 
-@interface ChildViewController ()
-
-@end
-
 @implementation ChildViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-     self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    self.clearsSelectionOnViewWillAppear = NO;
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithTitle:@"+" style:UIBarButtonItemStyleDone target:self action:@selector(addProduct)];
@@ -47,15 +32,11 @@
     //    longPress.delegate = self;
     [self.tableView addGestureRecognizer:longPress];
     [longPress release];
-    self.dao = [DataAccessObject sharedInstance];
-    
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    
     [self.tableView reloadData];
 }
 
@@ -71,18 +52,13 @@
         //Do Whatever You want on End of Gesture
     }
     else if (sender.state == UIGestureRecognizerStateBegan){
-        NSLog(@"UIGestureRecognizerStateBegan.");
-        //Do Whatever You want on Began of Gesture
-        
-        //Company *userSelectedCompany = [[Company alloc]init];
         UITableView *tableView = (UITableView *)self.view;
-        CGPoint point = [sender locationInView:self.view];
-        self.editPosition = [tableView indexPathForRowAtPoint:point];
-        EditProductViewController *editProdViewController = [[EditProductViewController alloc] initWithNibName:@"EditProductViewController" bundle:nil];
-        editProdViewController.editPosition = self.editPosition;
-        editProdViewController.products = self.products;
-        
-        [self.navigationController pushViewController:editProdViewController animated:YES];
+        CGPoint point = [sender locationInView:tableView];
+        NSIndexPath *indexPath = [tableView indexPathForRowAtPoint:point];
+        EditProductViewController *editProductVC = [[EditProductViewController alloc] initWithNibName:@"EditProductViewController" bundle:nil];
+        editProductVC.company = self.company;
+        editProductVC.indexPath = indexPath;
+        [self.navigationController pushViewController:editProductVC animated:YES];
     }
     
     
@@ -90,11 +66,9 @@
 
 -(void)addProduct {
 
-    AddProductViewController *addProdViewController = [[AddProductViewController alloc] initWithNibName:@"AddProductViewController" bundle:nil];
-    addProdViewController.compNew = self.compNew;
-    addProdViewController.compNew.companyProducts = self.compNew.companyProducts;
-    [self.navigationController pushViewController:addProdViewController animated:YES];
-    [NSMutableArray new];
+    AddProductViewController *addProductVC = [[AddProductViewController alloc] initWithNibName:@"AddProductViewController" bundle:nil];
+    addProductVC.company = self.company;
+    [self.navigationController pushViewController:addProductVC animated:YES];
     
 }
 
@@ -102,114 +76,59 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//#warning Potentially incomplete method implementation.
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    
-   return [self.compNew.companyProducts count];
-
+   return [self.company.companyProducts count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *cellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    // Configure the cell...
-    
-
-    Product *p = [self.compNew.companyProducts objectAtIndex:[indexPath row]];
-    cell.textLabel.text = p.productName;
-    [[cell imageView] setImage:[UIImage imageNamed:p.productLogo]];
-    
-    
-    //4. show logo for each product
-
-    
+    Product *product = [self.company.companyProducts objectAtIndex:[indexPath row]];
+    cell.textLabel.text = product.productName;
+    [[cell imageView] setImage:[UIImage imageNamed:product.productLogo]];
     return cell;
 }
 
-
-// Override to support conditional editing of the table view.
- 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
     return YES;
 }
 
-
-
-//Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        
-        [self.compNew.companyProducts removeObjectAtIndex:indexPath.row];
-        
-        
+        [[[DataAccessObject sharedDataAccessObject] getAllProductsFromCompany:self.company ] removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [tableView beginUpdates];
-        [tableView endUpdates];
-        [self.dao save];
-
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
 
-
-// Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-
-    id buffer = [self.compNew.companyProducts objectAtIndex:fromIndexPath.row];
-    [self.compNew.companyProducts removeObjectAtIndex:fromIndexPath.row];
-    [self.compNew.companyProducts insertObject:buffer atIndex:toIndexPath.row];
-
+    id buffer = [[[DataAccessObject sharedDataAccessObject] getAllProductsFromCompany:self.company] objectAtIndex:fromIndexPath.row];
+    [[[DataAccessObject sharedDataAccessObject] getAllProductsFromCompany:self.company] removeObjectAtIndex:fromIndexPath.row];
+    [[[DataAccessObject sharedDataAccessObject] getAllProductsFromCompany:self.company] insertObject:buffer atIndex:toIndexPath.row];
 }
-
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 #pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    WebViewController *detailViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-
-    // Pass the selected object to the new view controller.
-    
-
-
-    Product *p = [self.compNew.companyProducts objectAtIndex:[indexPath row]];
-    [detailViewController setUrl:p.productUrl];
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+    NSMutableArray *productsTemp = [[DataAccessObject sharedDataAccessObject] getAllProductsFromCompany:self.company];
+    Product *product = [productsTemp objectAtIndex:indexPath.row];
+    [webVC setUrl:product.productUrl];
+    [self.navigationController pushViewController:webVC animated:YES];
 }
  
 

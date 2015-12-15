@@ -7,16 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Product.h"
-#import "DataAccessObject.h"
+@class DataAccessObject;
+@class Company;
 
 @interface EditProductViewController : UIViewController
 
-@property (retain, nonatomic) IBOutlet UITextField *userInput;
-
-@property (retain, nonatomic) NSIndexPath *editPosition;
-@property (nonatomic, strong) NSMutableArray *products;
-@property (nonatomic, retain) DataAccessObject *dao;
+@property (retain, nonatomic) IBOutlet UITextField *editedProduct;
+@property (retain, nonatomic) NSIndexPath *indexPath;
+@property (strong, nonatomic) Company *company;
 
 - (IBAction)editProductName:(id)sender;
 

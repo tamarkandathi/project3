@@ -11,10 +11,7 @@
 
 @interface WebViewController : UIViewController
 @property (retain, nonatomic) IBOutlet UIWebView *webPage;
-
 @property (retain, nonatomic) NSURL *pageUrl;
--(void) setUrl:(NSString *)url;
-
 @property (retain,nonatomic) WKWebView *webView;
-
+-(void) setUrl:(NSString *)url;
 @end

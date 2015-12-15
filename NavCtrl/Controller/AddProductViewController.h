@@ -7,18 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ChildViewController.h"
-#import "qcdDemoViewController.h"
-#import "DataAccessObject.h"
+@class DataAccessObject;
+@class qcdDemoViewController;
+@class ChildViewController;
+@class Company;
 @interface AddProductViewController : UIViewController
 
-
-@property (retain, nonatomic) IBOutlet UILabel *addProdLabel;
-@property (nonatomic,strong) NSMutableArray *products;
-@property (retain, nonatomic) IBOutlet UITextField *userInput;
-@property (nonatomic,strong) Company *compNew;
-@property (nonatomic, retain) DataAccessObject *dao;
-
-- (IBAction)add:(id)sender;
+@property (retain, nonatomic) IBOutlet UITextField *productNew;
+@property (strong,nonatomic) Company *company;
+- (IBAction)addNewProduct:(id)sender;
 
 @end

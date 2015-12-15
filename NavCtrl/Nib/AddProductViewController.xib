@@ -7,8 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddProductViewController">
             <connections>
-                <outlet property="addProdLabel" destination="f2V-l8-SE0" id="TMF-WU-wWR"/>
-                <outlet property="userInput" destination="bhT-L5-hs9" id="54s-Xv-kBk"/>
+                <outlet property="productNew" destination="bhT-L5-hs9" id="zZb-ef-aaT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,7 +19,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a product" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f2V-l8-SE0">
                     <rect key="frame" x="241" y="200" width="119" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bhT-L5-hs9">
@@ -35,7 +34,7 @@
                     <rect key="frame" x="285" y="315" width="30" height="30"/>
                     <state key="normal" title="Add"/>
                     <connections>
-                        <action selector="add:" destination="-1" eventType="touchUpInside" id="ifj-Ms-eCr"/>
+                        <action selector="addNewProduct:" destination="-1" eventType="touchUpInside" id="N14-By-5aU"/>
                     </connections>
                 </button>
             </subviews>

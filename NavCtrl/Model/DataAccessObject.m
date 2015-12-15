@@ -7,40 +7,33 @@
 //
 
 #import "DataAccessObject.h"
-
-
+#import "Company.h"
+#import "Product.h"
+//#define COMPANIES_AND_PRODUCTS_ARRAY @"CompaniesAndProducts"
 //do we need class category here?
 
 
 @implementation DataAccessObject
 
-+(instancetype)sharedInstance
++(instancetype)sharedDataAccessObject
 {
-    
     static dispatch_once_t cp_singleton_once_token;
-    
-    static DataAccessObject *sharedInstance;
+    static DataAccessObject *sharedDataAccessObject;
     
     dispatch_once(&cp_singleton_once_token, ^{
-        
-        sharedInstance = [[self alloc] init];
-        
+        sharedDataAccessObject = [[self alloc] init];
     });
     
-    return sharedInstance;
-    
+    return sharedDataAccessObject;
 }
 
--(void)loadData {
-    // Dispose of any resources that can be recreated.
+-(NSMutableArray *)getAllCompaniesAndProducts {
     Company *apple = [[Company alloc]init];
     Company *samsung = [[Company alloc]init];
     Company *motorola = [[Company alloc]init];
     Company *htc = [[Company alloc]init];
     
-    
-    // Company APPLE
-    
+    //APPLE
     apple.companyName = @"Apple mobile devices";
     apple.companyLogo = @"AppleLogo.png";
     apple.companyStockCode = @"AAPL";
@@ -63,8 +56,7 @@
     
     apple.companyProducts = [NSMutableArray arrayWithObjects:iPad,iPodTouch,iPhone, nil];
     
-    
-    // Company Samsung
+    //Samsung
     samsung.companyName = @"Samsung mobile devices";
     samsung.companyLogo = @"SamsungLogo.jpeg";
     samsung.companyStockCode = @"005930.KS";
@@ -87,9 +79,7 @@
     
     samsung.companyProducts = [NSMutableArray arrayWithObjects:galaxyS4, galaxyNote, galaxyTab, nil];
     
-    
-    // Company MOTO
-    
+    //MOTOROLA
     motorola.companyName = @"Motorola mobile devices";
     motorola.companyLogo = @"MotorolaLogo.jpeg";
     motorola.companyStockCode = @"066570.KS";
@@ -109,9 +99,7 @@
     droidMax.productUrl = @"https://www.motorola.com/us/smartphones/droid-maxx/m-droid-maxx.html";
     motorola.companyProducts = [NSMutableArray arrayWithObjects:droidTurbo, droid3, droidMax, nil];
     
-    
-    
-    // Company HTC
+    //HTC
     htc.companyName = @"HTC mobile devices";
     htc.companyLogo = @"HTCLogo.jpeg";
     htc.companyStockCode = @"2498.TW";
@@ -131,59 +119,18 @@
     
     htc.companyProducts = [NSMutableArray arrayWithObjects:droidDna, oneM8, desire816, nil];
     
-    self.companies = [@[apple, samsung, motorola, htc] mutableCopy];
-    
+    return self.companies = [@[apple, samsung, motorola, htc] mutableCopy];
 }
-
-
--(void)updateStockPrices {
-    
-    for(int i = 0;i < [self.companies count];i++) {
-        [self.companies[i] setCompanyStockPrice:self.companyStockPrices[i]];
-    }
+-(NSMutableArray *)getAllProductsFromCompany:(Company *)company {
+    NSMutableArray *products = [[NSMutableArray alloc] init];
+    products = company.companyProducts;
+    return products;
 }
-
--(void) archiveObjects:(NSString*) filepath {
-    
-    
-    [NSKeyedArchiver archiveRootObject:self.companies toFile:filepath];
-    
+-(void)editProduct:(Product *)product atIndex:(NSIndexPath *)indexPath fromCompany:(Company *)company {
+    [company.companyProducts replaceObjectAtIndex:indexPath.row withObject:product];
 }
-
--(NSString*) getPropertyListPath {
-    NSURL *docDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-    NSURL *plist = [docDirectory URLByAppendingPathComponent:@"companies.plist"];
-    NSLog(@"%@",plist.path);
-    self.plistPath=plist.path;
-    return plist.path;
-    
+-(void)addNewProduct:(Product *)productNew toCompany:(Company *)company {
+    [company.companyProducts addObject:productNew];
 }
-
--(void)save{
-    [self archiveObjects:self.plistPath];
-}
--(void) unarchiveSavedObjects: (NSString *)filePath {
-    self.companies = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
-    NSLog(@"%@",self.companies);
-    for (int i = 0; i < [self.companies count]; i++) {
-        NSLog(@"For Company Name = %@",[[self.companies objectAtIndex:i] companyName]);
-    }
-    NSLog(@"Unarchive");
-}
-
-
--(void) loadCompanies {
-    NSString *filePath = [self getPropertyListPath];
-    NSLog(@"%@",filePath);
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        [self unarchiveSavedObjects:filePath];
-    }
-    else {
-        [self loadData];
-        [self archiveObjects: filePath];
-   }
-}
-
 
 @end

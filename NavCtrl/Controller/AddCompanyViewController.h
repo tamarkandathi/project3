@@ -7,21 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataAccessObject.h"
-#import "Company.h"
-#import "qcdDemoViewController.h"
-
+@class DataAccessObject;
+@class Company;
 
 @interface AddCompanyViewController : UIViewController
+@property (retain, nonatomic) IBOutlet UITextField *companyNewStockCode;
+@property (retain, nonatomic) IBOutlet UITextField *companyNew;
 
-@property (nonatomic,retain) IBOutlet UITextField *userInput;
-@property (nonatomic, retain) IBOutlet UILabel *companyNew;
-@property (nonatomic,retain) NSMutableArray *companies;
-@property (nonatomic, retain) DataAccessObject *dao;
-
-@property (retain, nonatomic) IBOutlet UILabel *stockCodeLabel;
-- (IBAction)addToCompanies:(id)sender;
-
-@property (retain, nonatomic) IBOutlet UITextField *userInputStockCode;
+- (IBAction)addNewCompany:(id)sender;
 
 @end

@@ -7,51 +7,25 @@
 //
 
 #import "AddProductViewController.h"
-
-@interface AddProductViewController ()
-
-@end
+#import "DataAccessObject.h"
+#import "Product.h"
+#import "Company.h"
 
 @implementation AddProductViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+- (IBAction)addNewProduct:(id)sender {
     
+    Product *addedProduct = [[Product alloc] init];
+    addedProduct.productName = self.productNew.text;
+    addedProduct.productLogo = @"defaultProdLogo.png";
+    
+    [[DataAccessObject sharedDataAccessObject] addNewProduct:addedProduct toCompany:self.company];
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (void)dealloc {
-    [_addProdLabel release];
-    [_userInput release];
+    [_productNew release];
     [super dealloc];
 }
 
-
-- (IBAction)add:(id)sender {
-    
-    Product *userAddedProduct = [[Product alloc] init];
-    userAddedProduct.productName = self.userInput.text;
-    userAddedProduct.productLogo = @"defaultProdLogo.png";
-    
-    [self.compNew.companyProducts addObject:userAddedProduct];
-    self.dao = [DataAccessObject sharedInstance];
-    [self.dao save];
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
 @end

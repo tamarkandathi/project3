@@ -8,10 +8,6 @@
 
 #import "WebViewController.h"
 
-@interface WebViewController ()
-
-@end
-
 @implementation WebViewController
 
 -(void)setUrl:(NSString *)url {
@@ -20,29 +16,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     self.webView = [[WKWebView alloc] initWithFrame:self.view.frame];
     
     NSURLRequest *request = [NSURLRequest requestWithURL: self.pageUrl];
     [self.webView loadRequest:request];
     self.view = self.webView;
-    self.webView.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+    self.webView.frame = self.view.frame;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (void)dealloc {
     [_webPage release];

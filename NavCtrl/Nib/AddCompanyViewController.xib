@@ -7,10 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddCompanyViewController">
             <connections>
-                <outlet property="companyNew" destination="Yhj-AU-Eax" id="KVz-RD-a8q"/>
-                <outlet property="stockCodeLabel" destination="ncg-gx-gXV" id="13g-RH-2LR"/>
-                <outlet property="userInput" destination="OtM-Sl-waG" id="9UG-An-shh"/>
-                <outlet property="userInputStockCode" destination="EJl-A2-SUV" id="l2e-Lq-gSq"/>
+                <outlet property="companyNew" destination="OtM-Sl-waG" id="6Nr-24-L9Y"/>
+                <outlet property="companyNewStockCode" destination="EJl-A2-SUV" id="xr2-U3-3a1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -50,7 +48,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Add"/>
                     <connections>
-                        <action selector="addToCompanies:" destination="-1" eventType="touchUpInside" id="zfN-rC-TiU"/>
+                        <action selector="addNewCompany:" destination="-1" eventType="touchUpInside" id="Lb7-Vt-sFt"/>
                     </connections>
                 </button>
             </subviews>

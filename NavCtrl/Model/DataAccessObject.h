@@ -7,21 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Company.h"
-#import "Product.h"
+@class Company;
+@class Product;
+@class ChildViewController;
 
 @interface DataAccessObject : NSObject
 
-@property (nonatomic, retain) NSMutableArray *companies;
-@property (nonatomic, retain) NSMutableArray *companyStockPrices;
-//-(void) getCompanies;
-@property (nonatomic,retain) NSString *plistPath;
--(void) updateStockPrices;
-+(instancetype)sharedInstance;
--(void) archiveObjects:(NSString*) filepath;
--(void)loadCompanies;
 
--(void)loadData;
--(void)save;
+@property (nonatomic, retain) NSMutableArray *companies;
+-(NSMutableArray *)getAllCompaniesAndProducts;
+-(void) editProduct: (Product*) product atIndex:(NSIndexPath*) indexPath fromCompany:(Company*) company;
+-(void) addNewProduct:(Product*) productNew toCompany:(Company*) company;
+-(NSMutableArray*) getAllProductsFromCompany:(Company*) company;
++(instancetype) sharedDataAccessObject;
 
 @end

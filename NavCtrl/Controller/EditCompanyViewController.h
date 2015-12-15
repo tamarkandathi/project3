@@ -7,17 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Company.h"
-#import "DataAccessObject.h"
+@class DataAccessObject;
+@class Company;
 
 @interface EditCompanyViewController : UIViewController
-
-@property (nonatomic,retain) IBOutlet UITextField *userInput;
-
-@property (nonatomic,strong) NSMutableArray *companies;
-@property (nonatomic, retain) NSIndexPath *editPosition;
-@property (nonatomic, retain) DataAccessObject *dao;
+@property (retain, nonatomic) IBOutlet UITextField *editedCompanyStockCode;
+@property (retain,nonatomic) IBOutlet UITextField *editedCompany;
+@property (retain, nonatomic) NSIndexPath *indexPath;
 - (IBAction)editCompanyName:(id)sender;
-
 
 @end

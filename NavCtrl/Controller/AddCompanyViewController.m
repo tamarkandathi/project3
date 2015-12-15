@@ -7,56 +7,31 @@
 //
 
 #import "AddCompanyViewController.h"
+#import "DataAccessObject.h"
+#import "Company.h"
 
 
 @implementation AddCompanyViewController
 
--(void)addToCompanies:(id)sender{
+- (IBAction)addNewCompany:(id)sender {
+    Company *addedCompany = [[Company alloc] init];
     
-    Company *userAddedCompany = [[Company alloc] init];
+    addedCompany.companyName = self.companyNew.text;
+    addedCompany.companyLogo = @"defaultCompanyLogo.jpeg";
     
-    userAddedCompany.companyName = self.userInput.text;
-    userAddedCompany.companyLogo = @"defaultCompanyLogo.jpeg";
-    
-    if ([self.userInputStockCode.text isEqualToString:@""]) {
-        userAddedCompany.companyStockCode = @"N/A";
+    if ([self.companyNewStockCode.text isEqualToString:@""]) {
+        addedCompany.companyStockCode = @"N/A";
     } else {
-        userAddedCompany.companyStockCode = self.userInputStockCode.text;
+        addedCompany.companyStockCode = self.companyNewStockCode.text;
     }
-    NSLog(@"Hello - %@",self.userInputStockCode.text);
-
-    userAddedCompany.companyProducts = [[NSMutableArray alloc]init];
-    [self.companies addObject:userAddedCompany];
-    self.dao = [DataAccessObject sharedInstance];
-    [self.dao save];
+    [[DataAccessObject sharedDataAccessObject].companies addObject:addedCompany];
+    addedCompany.companyProducts = [[NSMutableArray alloc]init];
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 
 - (void)dealloc {
-    [_stockCodeLabel release];
-    [_userInputStockCode release];
+    [_companyNew release];
+    [_companyNewStockCode release];
     [super dealloc];
 }
 @end

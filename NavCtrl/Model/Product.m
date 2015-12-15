@@ -7,25 +7,7 @@
 //
 
 #import "Product.h"
-
+NSString *kGenericUrl = @"http://turntotech.io/";
 @implementation Product
-
-- (instancetype)initWithCoder:(NSCoder *)coder
-{
-    self = [super init];
-    if (self) {
-        [self setProductName:[coder decodeObjectForKey:@"prodName"]];
-        [self setProductLogo:[coder decodeObjectForKey:@"prodLogo"]];
-        [self setProductUrl: [coder decodeObjectForKey:@"prodUrl"]];
-    }
-    return self;
-}
-
--(void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:self.productName forKey:@"prodName"];
-    [aCoder encodeObject:self.productLogo forKey:@"prodLogo"];
-    [aCoder encodeObject:self.productUrl forKey:@"prodUrl"];
-
-}
 
 @end

@@ -7,7 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditCompanyViewController">
             <connections>
-                <outlet property="userInput" destination="iGt-6R-bya" id="zcp-Y9-JcL"/>
+                <outlet property="editedCompany" destination="iGt-6R-bya" id="p2V-0m-fXo"/>
+                <outlet property="editedCompanyStockCode" destination="wkd-uu-4cv" id="Csz-Aw-1pr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,12 +23,17 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mO-D0-AQq">
-                    <rect key="frame" x="254" y="180" width="93" height="30"/>
+                    <rect key="frame" x="254" y="219" width="93" height="30"/>
                     <state key="normal" title="Update name"/>
                     <connections>
                         <action selector="editCompanyName:" destination="-1" eventType="touchUpInside" id="bl6-DR-j51"/>
                     </connections>
                 </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter new company stock code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wkd-uu-4cv">
+                    <rect key="frame" x="176" y="181" width="249" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
         </view>

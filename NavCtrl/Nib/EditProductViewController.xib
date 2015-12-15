@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditProductViewController">
             <connections>
-                <outlet property="userInput" destination="ILK-EH-X1K" id="HLX-KX-AGI"/>
+                <outlet property="editedProduct" destination="ILK-EH-X1K" id="fHp-Ov-eTt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

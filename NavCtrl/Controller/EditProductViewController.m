@@ -7,42 +7,23 @@
 //
 
 #import "EditProductViewController.h"
-
-@interface EditProductViewController ()
-
-@end
-
+#import "DataAccessObject.h"
+#import "Company.h"
+#import "Product.h"
 @implementation EditProductViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+- (IBAction)editProductName:(id)sender {
+    Product *selectedProduct = [[Product alloc] init];
+    selectedProduct.productName = self.editedProduct.text;
+    selectedProduct.productLogo = @"defaultProductLogo.png";
+    selectedProduct.productUrl = kGenericUrl;
+    [[DataAccessObject sharedDataAccessObject] editProduct:selectedProduct atIndex:self.indexPath fromCompany:self.company];
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (void)dealloc {
-    [_userInput release];
+    [_editedProduct release];
     [super dealloc];
-}
-- (IBAction)editProductName:(id)sender {
-    Product *userSelectedProduct = [self.products objectAtIndex:self.editPosition.row];
-    userSelectedProduct.productName = self.userInput.text;
-    [self.dao save];
-    [self.navigationController popViewControllerAnimated:YES];
 }
 @end
 

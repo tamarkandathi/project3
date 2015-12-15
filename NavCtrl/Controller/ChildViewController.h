@@ -7,19 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AddProductViewController.h"
-#import "Company.h"
-#import "EditProductViewController.h"
-#import "DataAccessObject.h"
-
+@class DataAccessObject;
+@class Company;
+@class Product;
 @class WebViewController;
+@class AddProductViewController;
 
 @interface ChildViewController : UITableViewController
-
-
-@property (nonatomic, retain) NSMutableArray *products;
-@property (nonatomic, strong) Company *compNew;
-@property (nonatomic,retain) NSIndexPath *editPosition;
-@property (nonatomic, retain) DataAccessObject *dao;
+@property (strong, nonatomic) Company *company;
 
 @end

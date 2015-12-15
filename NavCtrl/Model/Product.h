@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+extern  NSString *kGenericUrl;
 
-@interface Product : NSObject <NSCoding>
-
+@interface Product : NSObject 
 @property (retain, nonatomic) NSString *productName;
 @property (retain,nonatomic) NSString *productLogo;
 @property(retain, nonatomic) NSString *productUrl;
