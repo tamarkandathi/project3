@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Company : NSObject
+@interface Company : NSObject <NSCoding>
 
 @property (retain,nonatomic) NSMutableArray *companyProducts;
 @property (retain, nonatomic) NSString *companyName;

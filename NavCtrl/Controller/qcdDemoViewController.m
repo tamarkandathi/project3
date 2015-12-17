@@ -19,11 +19,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [[DataAccessObject sharedDataAccessObject] retrieveDataFromDefaults];
+    [[DataAccessObject sharedDataAccessObject] getStockPrices];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithTitle:@"+" style:UIBarButtonItemStyleDone target:self action:@selector(addCompany)];
     NSArray *buttons = [[NSArray alloc] initWithObjects:self.editButtonItem, addButton, nil];
     self.navigationItem.rightBarButtonItems = buttons;
-    [[DataAccessObject sharedDataAccessObject] getAllCompaniesAndProducts];
     self.title = @"Mobile device makers";
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
@@ -32,17 +32,19 @@
     [self.tableView addGestureRecognizer:longPress];
     [longPress release];
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    //BUG - the stock prices dont get updated until we come back to the companies view from child view
+    [[DataAccessObject sharedDataAccessObject] getStockPrices];
     [self.tableView reloadData];
-    //    [self getStockPricesFromYahoo];
 }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+#pragma mark Helper methods
 -(void)handleLongPress:(UILongPressGestureRecognizer*)sender {
     if (sender.state == UIGestureRecognizerStateBegan){
         CGPoint point = [sender locationInView:self.view];
@@ -53,15 +55,13 @@
         [self.navigationController pushViewController:editCompVC animated:YES];
     }
 }
-
-#pragma mark - Table view data source
 -(void)addCompany {
     AddCompanyViewController *addCompVC = [[AddCompanyViewController alloc] initWithNibName:@"AddCompanyViewController" bundle:nil];
     [self.navigationController pushViewController:addCompVC animated:YES];
 }
--(void) getStockPrices {
-    
-}
+
+#pragma mark - Table view data source
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -81,7 +81,8 @@
     }
 
     Company *company = [[DataAccessObject sharedDataAccessObject].companies objectAtIndex:[indexPath row]];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", company.companyName];
+    NSLog(@"company is ----- %@", company.description);
+    cell.textLabel.text = company.companyName;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",company.companyStockPrice];
     [[cell imageView] setImage:[UIImage imageNamed:company.companyLogo]];
     return cell;
@@ -115,11 +116,8 @@
     return YES;
 }
 
-
-
 #pragma mark - Table view delegate
 
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 
 {

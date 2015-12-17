@@ -12,13 +12,14 @@
 @class ChildViewController;
 
 @interface DataAccessObject : NSObject
+@property (retain, nonatomic) NSMutableArray *companies;
 
-
-@property (nonatomic, retain) NSMutableArray *companies;
--(NSMutableArray *)getAllCompaniesAndProducts;
 -(void) editProduct: (Product*) product atIndex:(NSIndexPath*) indexPath fromCompany:(Company*) company;
 -(void) addNewProduct:(Product*) productNew toCompany:(Company*) company;
 -(NSMutableArray*) getAllProductsFromCompany:(Company*) company;
+-(NSMutableArray *)getAllCompaniesAndProducts;
+-(NSMutableArray*) retrieveDataFromDefaults;
 +(instancetype) sharedDataAccessObject;
-
+-(void) saveDataToDefaults;
+-(void) getStockPrices;
 @end

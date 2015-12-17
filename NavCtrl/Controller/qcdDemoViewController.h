@@ -13,8 +13,6 @@
 @class ChildViewController;
 
 @interface qcdDemoViewController : UITableViewController
-
 @property (retain, nonatomic) IBOutlet  ChildViewController *childVC;
 @property (retain, nonatomic) NSIndexPath *indexPath;
-
 @end

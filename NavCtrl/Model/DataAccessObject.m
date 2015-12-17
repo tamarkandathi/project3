@@ -9,25 +9,29 @@
 #import "DataAccessObject.h"
 #import "Company.h"
 #import "Product.h"
-//#define COMPANIES_AND_PRODUCTS_ARRAY @"CompaniesAndProducts"
-//do we need class category here?
-
 
 @implementation DataAccessObject
 
 +(instancetype)sharedDataAccessObject
 {
+    
     static dispatch_once_t cp_singleton_once_token;
     static DataAccessObject *sharedDataAccessObject;
     
     dispatch_once(&cp_singleton_once_token, ^{
         sharedDataAccessObject = [[self alloc] init];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:sharedDataAccessObject selector:@selector(saveDataToDefaults) name: UIApplicationDidEnterBackgroundNotification object:nil];
+        
+
     });
     
     return sharedDataAccessObject;
 }
 
 -(NSMutableArray *)getAllCompaniesAndProducts {
+    
+    
     Company *apple = [[Company alloc]init];
     Company *samsung = [[Company alloc]init];
     Company *motorola = [[Company alloc]init];
@@ -132,5 +136,70 @@
 -(void)addNewProduct:(Product *)productNew toCompany:(Company *)company {
     [company.companyProducts addObject:productNew];
 }
+-(void) getStockPrices {
+    NSString *stockCodesURL = @"";
 
+    for(int i = 0;i < self.companies.count;i++) {
+        Company *company = [self.companies objectAtIndex:i];
+        stockCodesURL = [stockCodesURL stringByAppendingString:company.companyStockCode];
+        if (i != [self.companies count] - 1) {
+            stockCodesURL = [stockCodesURL stringByAppendingString:@"+"];
+        }
+    }
+    
+    stockCodesURL = [NSString stringWithFormat:@"http://finance.yahoo.com/d/quotes.csv?s=%@&f=a",stockCodesURL];
+    NSLog(@"%@",stockCodesURL);
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:stockCodesURL] completionHandler:
+                                      ^(NSData *data, NSURLResponse *response, NSError *error){
+                                          if (!error) {
+                                              NSString *stocks = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                                              NSMutableArray *companyStockPrices = (NSMutableArray*)[stocks componentsSeparatedByString:@"\n"];
+                                              [companyStockPrices removeLastObject];
+                                              
+                                              for (int i = 0; i < self.companies.count; i++) {
+                                                  Company *company = [self.companies objectAtIndex:i];
+                                                  if (companyStockPrices[i] != nil) {
+                                                      company.companyStockPrice = companyStockPrices[i];
+                                                  } else {
+                                                      company.companyStockPrice = @"Not Available";
+                                                  }
+                                                  NSLog(@"%@ - %@", company.companyName, company.companyStockPrice);
+                                              }
+                                          } else {
+                                              NSLog(@"%@", error.userInfo);
+                                              //will put an alert here for the user later
+                                          }
+                                      }];
+        [dataTask resume];
+}
+
+-(void) saveDataToDefaults {
+    NSData *archivedCompaniesArray = [NSKeyedArchiver archivedDataWithRootObject:self.companies];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject: archivedCompaniesArray forKey:@"companies"];
+    [defaults synchronize];
+}
+
+-(NSMutableArray*) retrieveDataFromDefaults {
+    NSLog(@"method call");
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *data = [defaults objectForKey:@"companies"];
+    NSLog(@"print data : %@", data.description);
+    if (data == nil) {
+        NSLog(@" data = nil");
+        [self getAllCompaniesAndProducts];
+        [self saveDataToDefaults];
+    } else {
+        NSLog(@"data != nil");
+        self.companies = [NSMutableArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
+        NSLog(@"%@", self.companies);
+    }
+    return self.companies;
+}
+-(void)dealloc {
+    [super dealloc];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
 @end

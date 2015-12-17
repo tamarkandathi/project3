@@ -17,7 +17,7 @@
     
     Product *addedProduct = [[Product alloc] init];
     addedProduct.productName = self.productNew.text;
-    addedProduct.productLogo = @"defaultProdLogo.png";
+    addedProduct.productLogo = @"defaultProductLogo";
     
     [[DataAccessObject sharedDataAccessObject] addNewProduct:addedProduct toCompany:self.company];
     [self.navigationController popViewControllerAnimated:YES];
