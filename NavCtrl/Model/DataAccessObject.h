@@ -18,8 +18,8 @@
 -(void) addNewProduct:(Product*) productNew toCompany:(Company*) company;
 -(NSMutableArray*) getAllProductsFromCompany:(Company*) company;
 -(NSMutableArray *)getAllCompaniesAndProducts;
--(NSMutableArray*) retrieveDataFromDefaults;
+-(NSMutableArray*) retrieveDataFromPlist;
 +(instancetype) sharedDataAccessObject;
--(void) saveDataToDefaults;
+-(void) saveDataToPlist;
 -(void) getStockPrices;
 @end

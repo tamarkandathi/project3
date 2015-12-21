@@ -9,23 +9,18 @@
 #import "DataAccessObject.h"
 #import "Company.h"
 #import "Product.h"
-
+#import "qcdDemoAppDelegate.h"
 @implementation DataAccessObject
 
 +(instancetype)sharedDataAccessObject
 {
-    
     static dispatch_once_t cp_singleton_once_token;
     static DataAccessObject *sharedDataAccessObject;
     
     dispatch_once(&cp_singleton_once_token, ^{
         sharedDataAccessObject = [[self alloc] init];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:sharedDataAccessObject selector:@selector(saveDataToDefaults) name: UIApplicationDidEnterBackgroundNotification object:nil];
-        
-
+        [[NSNotificationCenter defaultCenter] addObserver:sharedDataAccessObject selector:@selector(saveDataToPlist) name: UIApplicationDidEnterBackgroundNotification object:nil];
     });
-    
     return sharedDataAccessObject;
 }
 
@@ -51,11 +46,11 @@
     iPad.productUrl = @"https://www.apple.com/ipad/";
     
     iPodTouch.productName = @"iPod Touch";
-    iPodTouch.productLogo = @"iPodTouch.jpeg";
+    iPodTouch.productLogo = @"  ";
     iPodTouch.productUrl = @"https://www.apple.com/ipod/";
     
-    iPhone.productLogo = @"iPhone.jpeg";
     iPhone.productName = @"iPhone";
+    iPhone.productLogo = @"iPhone.jpeg";
     iPhone.productUrl = @"https://www.apple.com/iphone/";
     
     apple.companyProducts = [NSMutableArray arrayWithObjects:iPad,iPodTouch,iPhone, nil];
@@ -98,6 +93,7 @@
     droid3.productName = @"Droid 3";
     droid3.productLogo = @"MotorolaDroid3.jpeg";
     droid3.productUrl = @"https://www.motorola.com/us/DROID-3-BY-MOTOROLA/73138.html";
+    
     droidMax.productName = @"Droid MAX";
     droidMax.productLogo = @"MotorolaDroidMAX.jpeg";
     droidMax.productUrl = @"https://www.motorola.com/us/smartphones/droid-maxx/m-droid-maxx.html";
@@ -111,12 +107,15 @@
     Product *droidDna =[[Product alloc]init];
     Product *oneM8 = [[Product alloc]init];
     Product *desire816 = [[Product alloc]init];
+    
     droidDna.productName = @"Droid DNA";
     droidDna.productLogo = @"HTCDroidDNA.jpeg";
     droidDna.productUrl = @"https://www.htc.com/us/smartphones/droid-dna-by-htc/";
+    
     oneM8.productName = @"One M8";
     oneM8.productLogo = @"HTCOneM8.jpeg";
     oneM8.productUrl = @"https://www.htc.com/us/smartphones/htc-one-m8/";
+    
     desire816.productName = @"Desire 816";
     desire816.productLogo = @"HTCDesire816.jpeg";
     desire816.productUrl = @"https://www.htc.com/us/smartphones/htc-desire-816/";
@@ -148,7 +147,6 @@
     }
     
     stockCodesURL = [NSString stringWithFormat:@"http://finance.yahoo.com/d/quotes.csv?s=%@&f=a",stockCodesURL];
-    NSLog(@"%@",stockCodesURL);
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:stockCodesURL] completionHandler:
@@ -158,15 +156,19 @@
                                               NSMutableArray *companyStockPrices = (NSMutableArray*)[stocks componentsSeparatedByString:@"\n"];
                                               [companyStockPrices removeLastObject];
                                               
-                                              for (int i = 0; i < self.companies.count; i++) {
-                                                  Company *company = [self.companies objectAtIndex:i];
-                                                  if (companyStockPrices[i] != nil) {
-                                                      company.companyStockPrice = companyStockPrices[i];
-                                                  } else {
-                                                      company.companyStockPrice = @"Not Available";
+                                              
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  for (int i = 0; i < self.companies.count; i++) {
+                                                      Company *company = [self.companies objectAtIndex:i];
+                                                      if (companyStockPrices[i] != nil) {
+                                                          company.companyStockPrice = companyStockPrices[i];
+                                                      } else {
+                                                          company.companyStockPrice = @"Not Available";
+                                                      }
                                                   }
-                                                  NSLog(@"%@ - %@", company.companyName, company.companyStockPrice);
-                                              }
+                                              });
+                                              
+                                              
                                           } else {
                                               NSLog(@"%@", error.userInfo);
                                               //will put an alert here for the user later
@@ -175,25 +177,32 @@
         [dataTask resume];
 }
 
--(void) saveDataToDefaults {
+-(void) saveDataToPlist {
     NSData *archivedCompaniesArray = [NSKeyedArchiver archivedDataWithRootObject:self.companies];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject: archivedCompaniesArray forKey:@"companies"];
-    [defaults synchronize];
+    NSString *filePath = [self getPlistFilePath];
+    [archivedCompaniesArray writeToFile:filePath atomically: YES];
 }
 
--(NSMutableArray*) retrieveDataFromDefaults {
+-(NSString*) getPlistFilePath {
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSURL *directory = [fileManager URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+    NSURL *plistUrl = [directory URLByAppendingPathComponent:@"companies.plist"];
+    NSLog(@"%@", plistUrl.path);
+    return plistUrl.path;
+}
+
+-(NSMutableArray*) retrieveDataFromPlist {
     NSLog(@"method call");
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSData *data = [defaults objectForKey:@"companies"];
-    NSLog(@"print data : %@", data.description);
-    if (data == nil) {
-        NSLog(@" data = nil");
+    NSString *filePath  = [self getPlistFilePath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSData *archivedCompaniesArray = [NSData dataWithContentsOfFile:filePath];
+    if ([fileManager fileExistsAtPath:filePath] == NO) {
+        NSLog(@"file does not exist");
         [self getAllCompaniesAndProducts];
-        [self saveDataToDefaults];
+        [self saveDataToPlist];
     } else {
-        NSLog(@"data != nil");
-        self.companies = [NSMutableArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:data]];
+        NSLog(@"file exists");
+        self.companies = [NSMutableArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:archivedCompaniesArray]];
         NSLog(@"%@", self.companies);
     }
     return self.companies;

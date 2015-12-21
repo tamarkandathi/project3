@@ -19,7 +19,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[DataAccessObject sharedDataAccessObject] retrieveDataFromDefaults];
+    [[DataAccessObject sharedDataAccessObject] retrieveDataFromPlist];
     [[DataAccessObject sharedDataAccessObject] getStockPrices];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithTitle:@"+" style:UIBarButtonItemStyleDone target:self action:@selector(addCompany)];
     NSArray *buttons = [[NSArray alloc] initWithObjects:self.editButtonItem, addButton, nil];
