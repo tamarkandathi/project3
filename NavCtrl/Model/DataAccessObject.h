@@ -10,7 +10,7 @@
 @class Company;
 @class Product;
 @class ChildViewController;
-
+extern NSString *downloadStockPricesNotification; 
 @interface DataAccessObject : NSObject
 
 @property (retain, nonatomic) NSMutableArray *companies;

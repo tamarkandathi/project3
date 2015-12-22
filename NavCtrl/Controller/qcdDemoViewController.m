@@ -16,6 +16,14 @@
 
 @implementation qcdDemoViewController
 
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:downloadStockPricesNotification object:nil];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -40,6 +48,13 @@
     [[DataAccessObject sharedDataAccessObject] downloadStockPrices];
     [self.tableView reloadData];
 }
+
+-(void)reloadData {
+    dispatch_async(dispatch_get_main_queue(), ^{
+         [self.tableView reloadData];
+         });
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -126,6 +141,8 @@
     [self.navigationController pushViewController:self.childVC animated:YES];
 }
 
-
-
+-(void)dealloc {
+    [super dealloc];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:downloadStockPricesNotification object:nil];
+}
 @end

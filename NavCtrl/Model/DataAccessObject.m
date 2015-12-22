@@ -10,6 +10,7 @@
 #import "Company.h"
 #import "Product.h"
 #import "qcdDemoAppDelegate.h"
+NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
 @implementation DataAccessObject
 
 +(instancetype)sharedDataAccessObject
@@ -45,7 +46,7 @@
     iPad.productUrl = @"https://www.apple.com/ipad/";
     
     iPodTouch.productName = @"iPod Touch";
-    iPodTouch.productLogo = @"  ";
+    iPodTouch.productLogo = @"iPodTouch.jpeg";
     iPodTouch.productUrl = @"https://www.apple.com/ipod/";
     
     iPhone.productName = @"iPhone";
@@ -163,6 +164,7 @@
                                                       company.companyStockPrice = @"Not Available";
                                                   }
                                               }
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:downloadStockPricesNotification object:self];
                                               
                                           } else {
                                               NSLog(@"%@", error.userInfo);
