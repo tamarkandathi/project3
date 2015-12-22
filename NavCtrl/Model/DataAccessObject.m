@@ -10,6 +10,14 @@
 #import "Company.h"
 #import "Product.h"
 #import "qcdDemoAppDelegate.h"
+#import <sqlite3.h>
+
+NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
+
+@interface DataAccessObject ()
+
+@end
+
 @implementation DataAccessObject
 
 +(instancetype)sharedDataAccessObject
@@ -19,123 +27,24 @@
     
     dispatch_once(&cp_singleton_once_token, ^{
         sharedDataAccessObject = [[self alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:sharedDataAccessObject selector:@selector(saveDataToPlist) name: UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:sharedDataAccessObject selector:@selector(saveData) name: UIApplicationDidEnterBackgroundNotification object:nil];
     });
     return sharedDataAccessObject;
 }
 
--(NSMutableArray *)getAllCompaniesAndProducts {
-    
-    
-    Company *apple = [[Company alloc]init];
-    Company *samsung = [[Company alloc]init];
-    Company *motorola = [[Company alloc]init];
-    Company *htc = [[Company alloc]init];
-    
-    //APPLE
-    apple.companyName = @"Apple mobile devices";
-    apple.companyLogo = @"AppleLogo.png";
-    apple.companyStockCode = @"AAPL";
-    
-    Product *iPad = [[Product alloc] init];
-    Product *iPodTouch = [[Product alloc] init];
-    Product *iPhone = [[Product alloc] init];
-    
-    iPad.productName = @"iPad";
-    iPad.productLogo = @"iPad.jpeg";
-    iPad.productUrl = @"https://www.apple.com/ipad/";
-    
-    iPodTouch.productName = @"iPod Touch";
-    iPodTouch.productLogo = @"  ";
-    iPodTouch.productUrl = @"https://www.apple.com/ipod/";
-    
-    iPhone.productName = @"iPhone";
-    iPhone.productLogo = @"iPhone.jpeg";
-    iPhone.productUrl = @"https://www.apple.com/iphone/";
-    
-    apple.companyProducts = [NSMutableArray arrayWithObjects:iPad,iPodTouch,iPhone, nil];
-    
-    //Samsung
-    samsung.companyName = @"Samsung mobile devices";
-    samsung.companyLogo = @"SamsungLogo.jpeg";
-    samsung.companyStockCode = @"005930.KS";
-    
-    Product *galaxyS4 = [[Product alloc]init];
-    Product *galaxyNote = [[Product alloc]init];
-    Product *galaxyTab = [[Product alloc]init];
-    
-    galaxyS4.productName = @"Galaxy S4";
-    galaxyS4.productLogo = @"GalaxyS4.jpeg";
-    galaxyS4.productUrl = @"http://www.samsung.com/us/mobile/cell-phones/SM-G928VZDAVZW";
-    
-    galaxyNote.productName = @"Galaxy Note";
-    galaxyNote.productLogo = @"GalaxyNote.jpeg";
-    galaxyNote.productUrl = @"http://www.samsung.com/us/mobile/cell-phones/all-products?filter=galaxy-note";
-    
-    galaxyTab.productName = @"Galaxy Tab";
-    galaxyTab.productLogo = @"GalaxyTab.jpeg";
-    galaxyTab.productUrl = @"http://www.samsung.com/us/mobile/galaxy-tab/";
-    
-    samsung.companyProducts = [NSMutableArray arrayWithObjects:galaxyS4, galaxyNote, galaxyTab, nil];
-    
-    //MOTOROLA
-    motorola.companyName = @"Motorola mobile devices";
-    motorola.companyLogo = @"MotorolaLogo.jpeg";
-    motorola.companyStockCode = @"066570.KS";
-    
-    Product *droidTurbo = [[Product alloc] init];
-    Product *droid3 = [[Product alloc]init];
-    Product *droidMax = [[Product alloc]init];
-    droidTurbo.productName = @"Droid Turbo";
-    droidTurbo.productLogo = @"MotorolaDroidTurbo.jpeg";
-    droidTurbo.productUrl = @"https://www.motorola.com/us/smartphones/droid-turbo/droid-turbo-pdp.html";
-    
-    droid3.productName = @"Droid 3";
-    droid3.productLogo = @"MotorolaDroid3.jpeg";
-    droid3.productUrl = @"https://www.motorola.com/us/DROID-3-BY-MOTOROLA/73138.html";
-    
-    droidMax.productName = @"Droid MAX";
-    droidMax.productLogo = @"MotorolaDroidMAX.jpeg";
-    droidMax.productUrl = @"https://www.motorola.com/us/smartphones/droid-maxx/m-droid-maxx.html";
-    motorola.companyProducts = [NSMutableArray arrayWithObjects:droidTurbo, droid3, droidMax, nil];
-    
-    //HTC
-    htc.companyName = @"HTC mobile devices";
-    htc.companyLogo = @"HTCLogo.jpeg";
-    htc.companyStockCode = @"2498.TW";
-    
-    Product *droidDna =[[Product alloc]init];
-    Product *oneM8 = [[Product alloc]init];
-    Product *desire816 = [[Product alloc]init];
-    
-    droidDna.productName = @"Droid DNA";
-    droidDna.productLogo = @"HTCDroidDNA.jpeg";
-    droidDna.productUrl = @"https://www.htc.com/us/smartphones/droid-dna-by-htc/";
-    
-    oneM8.productName = @"One M8";
-    oneM8.productLogo = @"HTCOneM8.jpeg";
-    oneM8.productUrl = @"https://www.htc.com/us/smartphones/htc-one-m8/";
-    
-    desire816.productName = @"Desire 816";
-    desire816.productLogo = @"HTCDesire816.jpeg";
-    desire816.productUrl = @"https://www.htc.com/us/smartphones/htc-desire-816/";
-    
-    htc.companyProducts = [NSMutableArray arrayWithObjects:droidDna, oneM8, desire816, nil];
-    
-    return self.companies = [@[apple, samsung, motorola, htc] mutableCopy];
-}
--(NSMutableArray *)getAllProductsFromCompany:(Company *)company {
+-(NSMutableArray *)getAllProductsForCompany:(Company *)company {
     NSMutableArray *products = [[NSMutableArray alloc] init];
     products = company.companyProducts;
     return products;
 }
+
 -(void)editProduct:(Product *)product atIndex:(NSIndexPath *)indexPath fromCompany:(Company *)company {
     [company.companyProducts replaceObjectAtIndex:indexPath.row withObject:product];
 }
--(void)addNewProduct:(Product *)productNew toCompany:(Company *)company {
-    [company.companyProducts addObject:productNew];
+-(void)addNewProduct:(Product *)product toCompany:(Company *)company {
+    [company.companyProducts addObject:product];
 }
--(void) getStockPrices {
+-(void) downloadStockPrices {
     NSString *stockCodesURL = @"";
 
     for(int i = 0;i < self.companies.count;i++) {
@@ -156,59 +65,118 @@
                                               NSMutableArray *companyStockPrices = (NSMutableArray*)[stocks componentsSeparatedByString:@"\n"];
                                               [companyStockPrices removeLastObject];
                                               
-                                              
-                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                  for (int i = 0; i < self.companies.count; i++) {
-                                                      Company *company = [self.companies objectAtIndex:i];
-                                                      if (companyStockPrices[i] != nil) {
-                                                          company.companyStockPrice = companyStockPrices[i];
-                                                      } else {
-                                                          company.companyStockPrice = @"Not Available";
-                                                      }
+                                              for (int i = 0; i < self.companies.count; i++) {
+                                                  Company *company = [self.companies objectAtIndex:i];
+                                                  if (companyStockPrices[i] != nil) {
+                                                      company.companyStockPrice = companyStockPrices[i];
+                                                  } else {
+                                                      company.companyStockPrice = @"N/A";
                                                   }
-                                              });
-                                              
+                                              }
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:downloadStockPricesNotification object: self];
                                               
                                           } else {
                                               NSLog(@"%@", error.userInfo);
-                                              //will put an alert here for the user later
+                                              //display an alert here
                                           }
                                       }];
         [dataTask resume];
 }
 
--(void) saveDataToPlist {
-    NSData *archivedCompaniesArray = [NSKeyedArchiver archivedDataWithRootObject:self.companies];
-    NSString *filePath = [self getPlistFilePath];
-    [archivedCompaniesArray writeToFile:filePath atomically: YES];
-}
-
--(NSString*) getPlistFilePath {
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
-    NSURL *directory = [fileManager URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-    NSURL *plistUrl = [directory URLByAppendingPathComponent:@"companies.plist"];
-    NSLog(@"%@", plistUrl.path);
-    return plistUrl.path;
-}
-
--(NSMutableArray*) retrieveDataFromPlist {
-    NSLog(@"method call");
-    NSString *filePath  = [self getPlistFilePath];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSData *archivedCompaniesArray = [NSData dataWithContentsOfFile:filePath];
-    if ([fileManager fileExistsAtPath:filePath] == NO) {
-        NSLog(@"file does not exist");
-        [self getAllCompaniesAndProducts];
-        [self saveDataToPlist];
-    } else {
-        NSLog(@"file exists");
-        self.companies = [NSMutableArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:archivedCompaniesArray]];
-        NSLog(@"%@", self.companies);
+-(NSMutableArray*)retrieveData {
+    self.companies = [[NSMutableArray alloc] init];
+    sqlite3 *companiesDB;
+    const char *databasePath = [[self getDatabasePath] UTF8String];
+    sqlite3_stmt *statementCompanies;
+    sqlite3_stmt *statementProducts;
+    
+    if (sqlite3_open(databasePath, &companiesDB) == SQLITE_OK) {
+        NSString *companiesQuery  = [NSString stringWithFormat:@"SELECT * FROM companies"];
+        const char *companiesQueryCString = [companiesQuery UTF8String];
+        
+        if (sqlite3_prepare(companiesDB, companiesQueryCString, -1, &statementCompanies, NULL) == SQLITE_OK) {
+    
+            while (sqlite3_step(statementCompanies) == SQLITE_ROW) {
+                Company *company = [[Company alloc]init];
+                company.companyProducts = [[NSMutableArray alloc]init];
+                company.companyName = [NSString stringWithUTF8String:(const char*) sqlite3_column_text(statementCompanies, 1)];
+                company.companyLogo = [NSString stringWithUTF8String:(const char*) sqlite3_column_text(statementCompanies, 2)];
+                company.companyStockCode = [NSString stringWithUTF8String:(const char*) sqlite3_column_text(statementCompanies,3)];
+                NSString *companyIdString = [NSString stringWithUTF8String:(const char*) sqlite3_column_text(statementCompanies,0)];
+                int company_id = (int)[companyIdString integerValue];
+                
+                NSString *productsQuery  = [NSString stringWithFormat:@"SELECT * FROM products WHERE company_id = %d",company_id];
+                const char *productsQueryCString = [productsQuery UTF8String];
+                
+                if (sqlite3_prepare(companiesDB, productsQueryCString, -1, &statementProducts, NULL) == SQLITE_OK) {
+                    
+                    while (sqlite3_step(statementProducts) == SQLITE_ROW) {
+                        Product *product = [[Product alloc]init];
+                        product.productName = [NSString stringWithUTF8String:(const char*) sqlite3_column_text(statementProducts, 1)];
+                        product.productLogo = [NSString stringWithUTF8String:(const char*) sqlite3_column_text(statementProducts, 2)];
+                        product.productUrl = [NSString stringWithUTF8String:(const char*) sqlite3_column_text(statementProducts, 3)];
+                        [company.companyProducts addObject:product];
+                    }
+                }
+                [self.companies addObject:company];
+            }
+        }
     }
+    sqlite3_close(companiesDB);
     return self.companies;
+}
+
+-(void) saveData {
+    NSLog(@"%@", self.companies);
+    char *error;
+    sqlite3 *companiesDB;
+    const char *databasePath = [[self getDatabasePath] UTF8String];
+    if (sqlite3_open(databasePath, &companiesDB) == SQLITE_OK) {
+        NSString *companyString = [NSString stringWithFormat:@"DELETE FROM companies"];
+        NSString *productString = [NSString stringWithFormat:@"DELETE FROM products"];
+        const char *deleteCompaniesStatement = [companyString UTF8String];
+        const char *deleteProductsStatement = [productString UTF8String];
+        
+        if (sqlite3_exec(companiesDB, deleteCompaniesStatement, NULL, NULL, &error) == SQLITE_OK) {
+            if (sqlite3_exec(companiesDB, deleteProductsStatement, NULL, NULL, &error) == SQLITE_OK) {
+                for (int i = 0; i < self.companies.count; i++) {
+                    Company *company = [self.companies objectAtIndex:i];
+                    companyString = [NSString stringWithFormat:@"INSERT INTO companies (company_name, company_logo, company_stockcode) VALUES ('%@', '%@', '%@')", company.companyName, company.companyLogo, company.companyStockCode];
+                    const char *insertCompanyStatement = [companyString UTF8String];
+                    if (sqlite3_exec(companiesDB, insertCompanyStatement, NULL, NULL, &error) == SQLITE_OK) {
+                        for (int j = 0; j < company.companyProducts.count; j++) {
+                            Product *product = [company.companyProducts objectAtIndex:j];
+                            productString = [NSString stringWithFormat:@"INSERT INTO products (company_id, product_name, product_logo, product_url) VALUES (%d, '%@', '%@', '%@')",(i+1), product.productName, product.productLogo, product.productUrl];
+                            const char *insertProductStatement = [productString UTF8String];
+                            if (sqlite3_exec(companiesDB, insertProductStatement, NULL, NULL, &error) == SQLITE_OK) {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    sqlite3_close(companiesDB);
+}
+
+-(NSString*) getDatabasePath {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectoryPath = [paths objectAtIndex:0];
+    NSString *destinationPath = [documentsDirectoryPath stringByAppendingPathComponent:@"NavModel.db"];
+    NSError *error = nil;
+    if ([fileManager fileExistsAtPath:destinationPath] == NO) {
+        NSString *sourcePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"NavModel.db"];
+        [fileManager copyItemAtPath:sourcePath toPath:destinationPath error:&error];
+        if (error) {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }
+    return destinationPath;
 }
 -(void)dealloc {
     [super dealloc];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+
 }
 @end

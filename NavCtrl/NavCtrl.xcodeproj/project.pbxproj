@@ -7,41 +7,43 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		320519F41C27975A0038BE22 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 320519F31C27975A0038BE22 /* libsqlite3.0.tbd */; };
+		32051A201C2915F40038BE22 /* NavModel.db in Resources */ = {isa = PBXBuildFile; fileRef = 32051A1F1C2915E40038BE22 /* NavModel.db */; };
 		326BB7371BC5750D0066295D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326BB7361BC5750D0066295D /* WebKit.framework */; };
-		32D91A511BCD819B0097309F /* defaultCompanyLogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32D91A501BCD819B0097309F /* defaultCompanyLogo.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32D91A581BCDACFA0097309F /* defaultProductLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D91A571BCDACFA0097309F /* defaultProductLogo.png */; settings = {ASSET_TAGS = (); }; };
-		32DFAE161BD3F01300A7E9DF /* AddCompanyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE101BD3F01300A7E9DF /* AddCompanyViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		32DFAE171BD3F01300A7E9DF /* AddProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE111BD3F01300A7E9DF /* AddProductViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		32DFAE181BD3F01300A7E9DF /* EditCompanyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE121BD3F01300A7E9DF /* EditCompanyViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		32DFAE191BD3F01300A7E9DF /* EditProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE131BD3F01300A7E9DF /* EditProductViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		32DFAE1A1BD3F01300A7E9DF /* qcdDemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE141BD3F01300A7E9DF /* qcdDemoViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		32DFAE1B1BD3F01300A7E9DF /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE151BD3F01300A7E9DF /* WebViewController.xib */; settings = {ASSET_TAGS = (); }; };
-		32DFAE321BD3F03F00A7E9DF /* AddCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE1E1BD3F03F00A7E9DF /* AddCompanyViewController.m */; settings = {ASSET_TAGS = (); }; };
-		32DFAE331BD3F03F00A7E9DF /* AddProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE201BD3F03F00A7E9DF /* AddProductViewController.m */; settings = {ASSET_TAGS = (); }; };
-		32DFAE341BD3F04000A7E9DF /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE221BD3F03F00A7E9DF /* ChildViewController.m */; settings = {ASSET_TAGS = (); }; };
-		32DFAE351BD3F04000A7E9DF /* EditCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE241BD3F03F00A7E9DF /* EditCompanyViewController.m */; settings = {ASSET_TAGS = (); }; };
-		32DFAE361BD3F04000A7E9DF /* EditProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE261BD3F03F00A7E9DF /* EditProductViewController.m */; settings = {ASSET_TAGS = (); }; };
-		32DFAE371BD3F04000A7E9DF /* qcdDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE281BD3F03F00A7E9DF /* qcdDemoViewController.m */; settings = {ASSET_TAGS = (); }; };
-		32DFAE381BD3F04000A7E9DF /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE2A1BD3F03F00A7E9DF /* WebViewController.m */; settings = {ASSET_TAGS = (); }; };
-		32DFAE391BD3F04000A7E9DF /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE2D1BD3F03F00A7E9DF /* Company.m */; settings = {ASSET_TAGS = (); }; };
-		32DFAE3A1BD3F04000A7E9DF /* DataAccessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE2F1BD3F03F00A7E9DF /* DataAccessObject.m */; settings = {ASSET_TAGS = (); }; };
-		32DFAE3B1BD3F04000A7E9DF /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE311BD3F03F00A7E9DF /* Product.m */; settings = {ASSET_TAGS = (); }; };
-		32F58C811BBE23F400293579 /* AppleLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C7D1BBE23F400293579 /* AppleLogo.png */; settings = {ASSET_TAGS = (); }; };
-		32F58C821BBE23F400293579 /* MotorolaLogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C7E1BBE23F400293579 /* MotorolaLogo.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C831BBE23F400293579 /* SamsungLogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C7F1BBE23F400293579 /* SamsungLogo.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C841BBE23F400293579 /* HTCLogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C801BBE23F400293579 /* HTCLogo.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C911BBE39D000293579 /* HTCDesire816.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C851BBE39D000293579 /* HTCDesire816.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C921BBE39D000293579 /* HTCDroidDNA.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C861BBE39D000293579 /* HTCDroidDNA.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C931BBE39D000293579 /* HTCOneM8.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C871BBE39D000293579 /* HTCOneM8.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C941BBE39D000293579 /* GalaxyNote.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C881BBE39D000293579 /* GalaxyNote.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C951BBE39D000293579 /* GalaxyS4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C891BBE39D000293579 /* GalaxyS4.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C961BBE39D000293579 /* GalaxyTab.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C8A1BBE39D000293579 /* GalaxyTab.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C9A1BBE39D000293579 /* MotorolaDroid3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C8E1BBE39D000293579 /* MotorolaDroid3.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C9B1BBE39D000293579 /* MotorolaDroidMAX.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C8F1BBE39D000293579 /* MotorolaDroidMAX.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58C9C1BBE39D000293579 /* MotorolaDroidTurbo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C901BBE39D000293579 /* MotorolaDroidTurbo.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58CA01BBE3C1D00293579 /* iPodTouch.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C9D1BBE3C1D00293579 /* iPodTouch.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58CA11BBE3C1D00293579 /* iPhone.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C9E1BBE3C1D00293579 /* iPhone.jpeg */; settings = {ASSET_TAGS = (); }; };
-		32F58CA21BBE3C1D00293579 /* iPad.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C9F1BBE3C1D00293579 /* iPad.jpeg */; settings = {ASSET_TAGS = (); }; };
+		32D91A511BCD819B0097309F /* defaultCompanyLogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32D91A501BCD819B0097309F /* defaultCompanyLogo.jpeg */; };
+		32D91A581BCDACFA0097309F /* defaultProductLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D91A571BCDACFA0097309F /* defaultProductLogo.png */; };
+		32DFAE161BD3F01300A7E9DF /* AddCompanyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE101BD3F01300A7E9DF /* AddCompanyViewController.xib */; };
+		32DFAE171BD3F01300A7E9DF /* AddProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE111BD3F01300A7E9DF /* AddProductViewController.xib */; };
+		32DFAE181BD3F01300A7E9DF /* EditCompanyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE121BD3F01300A7E9DF /* EditCompanyViewController.xib */; };
+		32DFAE191BD3F01300A7E9DF /* EditProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE131BD3F01300A7E9DF /* EditProductViewController.xib */; };
+		32DFAE1A1BD3F01300A7E9DF /* qcdDemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE141BD3F01300A7E9DF /* qcdDemoViewController.xib */; };
+		32DFAE1B1BD3F01300A7E9DF /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE151BD3F01300A7E9DF /* WebViewController.xib */; };
+		32DFAE321BD3F03F00A7E9DF /* AddCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE1E1BD3F03F00A7E9DF /* AddCompanyViewController.m */; };
+		32DFAE331BD3F03F00A7E9DF /* AddProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE201BD3F03F00A7E9DF /* AddProductViewController.m */; };
+		32DFAE341BD3F04000A7E9DF /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE221BD3F03F00A7E9DF /* ChildViewController.m */; };
+		32DFAE351BD3F04000A7E9DF /* EditCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE241BD3F03F00A7E9DF /* EditCompanyViewController.m */; };
+		32DFAE361BD3F04000A7E9DF /* EditProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE261BD3F03F00A7E9DF /* EditProductViewController.m */; };
+		32DFAE371BD3F04000A7E9DF /* qcdDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE281BD3F03F00A7E9DF /* qcdDemoViewController.m */; };
+		32DFAE381BD3F04000A7E9DF /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE2A1BD3F03F00A7E9DF /* WebViewController.m */; };
+		32DFAE391BD3F04000A7E9DF /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE2D1BD3F03F00A7E9DF /* Company.m */; };
+		32DFAE3A1BD3F04000A7E9DF /* DataAccessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE2F1BD3F03F00A7E9DF /* DataAccessObject.m */; };
+		32DFAE3B1BD3F04000A7E9DF /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DFAE311BD3F03F00A7E9DF /* Product.m */; };
+		32F58C811BBE23F400293579 /* AppleLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C7D1BBE23F400293579 /* AppleLogo.png */; };
+		32F58C821BBE23F400293579 /* MotorolaLogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C7E1BBE23F400293579 /* MotorolaLogo.jpeg */; };
+		32F58C831BBE23F400293579 /* SamsungLogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C7F1BBE23F400293579 /* SamsungLogo.jpeg */; };
+		32F58C841BBE23F400293579 /* HTCLogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C801BBE23F400293579 /* HTCLogo.jpeg */; };
+		32F58C911BBE39D000293579 /* HTCDesire816.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C851BBE39D000293579 /* HTCDesire816.jpeg */; };
+		32F58C921BBE39D000293579 /* HTCDroidDNA.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C861BBE39D000293579 /* HTCDroidDNA.jpeg */; };
+		32F58C931BBE39D000293579 /* HTCOneM8.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C871BBE39D000293579 /* HTCOneM8.jpeg */; };
+		32F58C941BBE39D000293579 /* GalaxyNote.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C881BBE39D000293579 /* GalaxyNote.jpeg */; };
+		32F58C951BBE39D000293579 /* GalaxyS4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C891BBE39D000293579 /* GalaxyS4.jpeg */; };
+		32F58C961BBE39D000293579 /* GalaxyTab.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C8A1BBE39D000293579 /* GalaxyTab.jpeg */; };
+		32F58C9A1BBE39D000293579 /* MotorolaDroid3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C8E1BBE39D000293579 /* MotorolaDroid3.jpeg */; };
+		32F58C9B1BBE39D000293579 /* MotorolaDroidMAX.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C8F1BBE39D000293579 /* MotorolaDroidMAX.jpeg */; };
+		32F58C9C1BBE39D000293579 /* MotorolaDroidTurbo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C901BBE39D000293579 /* MotorolaDroidTurbo.jpeg */; };
+		32F58CA01BBE3C1D00293579 /* iPodTouch.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C9D1BBE3C1D00293579 /* iPodTouch.jpeg */; };
+		32F58CA11BBE3C1D00293579 /* iPhone.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C9E1BBE3C1D00293579 /* iPhone.jpeg */; };
+		32F58CA21BBE3C1D00293579 /* iPad.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32F58C9F1BBE3C1D00293579 /* iPad.jpeg */; };
 		48A656B518163BF200746D36 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A656B418163BF200746D36 /* Foundation.framework */; };
 		48A656B718163BF200746D36 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A656B618163BF200746D36 /* CoreGraphics.framework */; };
 		48A656B918163BF200746D36 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A656B818163BF200746D36 /* UIKit.framework */; };
@@ -68,6 +70,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		320519F31C27975A0038BE22 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		32051A1F1C2915E40038BE22 /* NavModel.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = NavModel.db; sourceTree = "<group>"; };
 		326BB7361BC5750D0066295D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		32D91A501BCD819B0097309F /* defaultCompanyLogo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = defaultCompanyLogo.jpeg; sourceTree = "<group>"; };
 		32D91A571BCDACFA0097309F /* defaultProductLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultProductLogo.png; sourceTree = "<group>"; };
@@ -137,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				320519F41C27975A0038BE22 /* libsqlite3.0.tbd in Frameworks */,
 				326BB7371BC5750D0066295D /* WebKit.framework in Frameworks */,
 				48A656B718163BF200746D36 /* CoreGraphics.framework in Frameworks */,
 				48A656B918163BF200746D36 /* UIKit.framework in Frameworks */,
@@ -229,6 +234,7 @@
 		48A656B318163BF200746D36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				320519F31C27975A0038BE22 /* libsqlite3.0.tbd */,
 				326BB7361BC5750D0066295D /* WebKit.framework */,
 				48A656B418163BF200746D36 /* Foundation.framework */,
 				48A656B618163BF200746D36 /* CoreGraphics.framework */,
@@ -241,6 +247,7 @@
 		48A656BA18163BF200746D36 /* NavCtrl */ = {
 			isa = PBXGroup;
 			children = (
+				32051A1F1C2915E40038BE22 /* NavModel.db */,
 				48A656C318163BF200746D36 /* qcdDemoAppDelegate.h */,
 				48A656C418163BF200746D36 /* qcdDemoAppDelegate.m */,
 				48A656C618163BF200746D36 /* Images.xcassets */,
@@ -373,6 +380,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32051A201C2915F40038BE22 /* NavModel.db in Resources */,
 				32F58C841BBE23F400293579 /* HTCLogo.jpeg in Resources */,
 				32F58C961BBE39D000293579 /* GalaxyTab.jpeg in Resources */,
 				32DFAE1B1BD3F01300A7E9DF /* WebViewController.xib in Resources */,

@@ -16,11 +16,19 @@
 
 @implementation qcdDemoViewController
 
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:downloadStockPricesNotification object:nil];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[DataAccessObject sharedDataAccessObject] retrieveDataFromPlist];
-    [[DataAccessObject sharedDataAccessObject] getStockPrices];
+    [[DataAccessObject sharedDataAccessObject] retrieveData];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithTitle:@"+" style:UIBarButtonItemStyleDone target:self action:@selector(addCompany)];
     NSArray *buttons = [[NSArray alloc] initWithObjects:self.editButtonItem, addButton, nil];
     self.navigationItem.rightBarButtonItems = buttons;
@@ -32,13 +40,16 @@
     [self.tableView addGestureRecognizer:longPress];
     [longPress release];
 }
+-(void) reloadData{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //BUG - the stock prices dont get updated until we come back to the companies view from child view
-    [[DataAccessObject sharedDataAccessObject] getStockPrices];
-    [self.tableView reloadData];
+    [[DataAccessObject sharedDataAccessObject] downloadStockPrices];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -81,7 +92,6 @@
     }
 
     Company *company = [[DataAccessObject sharedDataAccessObject].companies objectAtIndex:[indexPath row]];
-    NSLog(@"company is ----- %@", company.description);
     cell.textLabel.text = company.companyName;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",company.companyStockPrice];
     [[cell imageView] setImage:[UIImage imageNamed:company.companyLogo]];
@@ -126,7 +136,8 @@
     self.childVC.company = selectedCompany;
     [self.navigationController pushViewController:self.childVC animated:YES];
 }
-
-
-
+-(void)dealloc {
+    [super dealloc];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:downloadStockPricesNotification object:nil];
+}
 @end

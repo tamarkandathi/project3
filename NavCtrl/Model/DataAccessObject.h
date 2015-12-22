@@ -10,16 +10,15 @@
 @class Company;
 @class Product;
 @class ChildViewController;
+extern NSString *downloadStockPricesNotification;
 
 @interface DataAccessObject : NSObject
 @property (retain, nonatomic) NSMutableArray *companies;
 
 -(void) editProduct: (Product*) product atIndex:(NSIndexPath*) indexPath fromCompany:(Company*) company;
--(void) addNewProduct:(Product*) productNew toCompany:(Company*) company;
--(NSMutableArray*) getAllProductsFromCompany:(Company*) company;
--(NSMutableArray *)getAllCompaniesAndProducts;
--(NSMutableArray*) retrieveDataFromPlist;
+-(void) addNewProduct:(Product*) product toCompany:(Company*) company;
+-(NSMutableArray*) getAllProductsForCompany:(Company*) company;
 +(instancetype) sharedDataAccessObject;
--(void) saveDataToPlist;
--(void) getStockPrices;
+-(NSMutableArray*)retrieveData;
+-(void) downloadStockPrices;
 @end
