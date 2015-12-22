@@ -12,14 +12,16 @@
 @class ChildViewController;
 
 @interface DataAccessObject : NSObject
+
 @property (retain, nonatomic) NSMutableArray *companies;
 
 -(void) editProduct: (Product*) product atIndex:(NSIndexPath*) indexPath fromCompany:(Company*) company;
--(void) addNewProduct:(Product*) productNew toCompany:(Company*) company;
--(NSMutableArray*) getAllProductsFromCompany:(Company*) company;
+-(void) addNewProduct:(Product*) product toCompany:(Company*) company;
+-(NSMutableArray*) getAllProductsForCompany:(Company*) company;
 -(NSMutableArray *)getAllCompaniesAndProducts;
--(NSMutableArray*) retrieveDataFromPlist;
+-(NSMutableArray*) retrieveData;
 +(instancetype) sharedDataAccessObject;
--(void) saveDataToPlist;
--(void) getStockPrices;
+-(void) downloadStockPrices;
+-(void) saveData;
+
 @end

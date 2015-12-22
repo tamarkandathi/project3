@@ -19,13 +19,12 @@
     
     dispatch_once(&cp_singleton_once_token, ^{
         sharedDataAccessObject = [[self alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:sharedDataAccessObject selector:@selector(saveDataToPlist) name: UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:sharedDataAccessObject selector:@selector(saveData) name: UIApplicationDidEnterBackgroundNotification object:nil];
     });
     return sharedDataAccessObject;
 }
 
 -(NSMutableArray *)getAllCompaniesAndProducts {
-    
     
     Company *apple = [[Company alloc]init];
     Company *samsung = [[Company alloc]init];
@@ -55,7 +54,7 @@
     
     apple.companyProducts = [NSMutableArray arrayWithObjects:iPad,iPodTouch,iPhone, nil];
     
-    //Samsung
+    //SAMSUNG
     samsung.companyName = @"Samsung mobile devices";
     samsung.companyLogo = @"SamsungLogo.jpeg";
     samsung.companyStockCode = @"005930.KS";
@@ -124,7 +123,7 @@
     
     return self.companies = [@[apple, samsung, motorola, htc] mutableCopy];
 }
--(NSMutableArray *)getAllProductsFromCompany:(Company *)company {
+-(NSMutableArray *)getAllProductsForCompany:(Company *)company {
     NSMutableArray *products = [[NSMutableArray alloc] init];
     products = company.companyProducts;
     return products;
@@ -135,7 +134,7 @@
 -(void)addNewProduct:(Product *)productNew toCompany:(Company *)company {
     [company.companyProducts addObject:productNew];
 }
--(void) getStockPrices {
+-(void) downloadStockPrices {
     NSString *stockCodesURL = @"";
 
     for(int i = 0;i < self.companies.count;i++) {
@@ -156,28 +155,24 @@
                                               NSMutableArray *companyStockPrices = (NSMutableArray*)[stocks componentsSeparatedByString:@"\n"];
                                               [companyStockPrices removeLastObject];
                                               
-                                              
-                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                  for (int i = 0; i < self.companies.count; i++) {
-                                                      Company *company = [self.companies objectAtIndex:i];
-                                                      if (companyStockPrices[i] != nil) {
-                                                          company.companyStockPrice = companyStockPrices[i];
-                                                      } else {
-                                                          company.companyStockPrice = @"Not Available";
-                                                      }
+                                              for (int i = 0; i < self.companies.count; i++) {
+                                                  Company *company = [self.companies objectAtIndex:i];
+                                                  if (companyStockPrices[i] != nil) {
+                                                      company.companyStockPrice = companyStockPrices[i];
+                                                  } else {
+                                                      company.companyStockPrice = @"Not Available";
                                                   }
-                                              });
-                                              
+                                              }
                                               
                                           } else {
                                               NSLog(@"%@", error.userInfo);
-                                              //will put an alert here for the user later
+                                              //
                                           }
                                       }];
         [dataTask resume];
 }
 
--(void) saveDataToPlist {
+-(void) saveData {
     NSData *archivedCompaniesArray = [NSKeyedArchiver archivedDataWithRootObject:self.companies];
     NSString *filePath = [self getPlistFilePath];
     [archivedCompaniesArray writeToFile:filePath atomically: YES];
@@ -191,7 +186,7 @@
     return plistUrl.path;
 }
 
--(NSMutableArray*) retrieveDataFromPlist {
+-(NSMutableArray*) retrieveData {
     NSLog(@"method call");
     NSString *filePath  = [self getPlistFilePath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -199,7 +194,7 @@
     if ([fileManager fileExistsAtPath:filePath] == NO) {
         NSLog(@"file does not exist");
         [self getAllCompaniesAndProducts];
-        [self saveDataToPlist];
+        [self saveData];
     } else {
         NSLog(@"file exists");
         self.companies = [NSMutableArray arrayWithArray:[NSKeyedUnarchiver unarchiveObjectWithData:archivedCompaniesArray]];

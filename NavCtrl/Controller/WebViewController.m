@@ -24,11 +24,6 @@
     self.webView.frame = self.view.frame;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)dealloc {
     [_webPage release];
     [super dealloc];

@@ -35,15 +35,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)handleLongPress:(UILongPressGestureRecognizer*)sender {
@@ -60,8 +53,6 @@
         editProductVC.indexPath = indexPath;
         [self.navigationController pushViewController:editProductVC animated:YES];
     }
-    
-    
 }
 
 -(void)addProduct {
@@ -69,7 +60,6 @@
     AddProductViewController *addProductVC = [[AddProductViewController alloc] initWithNibName:@"AddProductViewController" bundle:nil];
     addProductVC.company = self.company;
     [self.navigationController pushViewController:addProductVC animated:YES];
-    
 }
 
 #pragma mark - Table view data source
@@ -107,7 +97,7 @@
 {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [[[DataAccessObject sharedDataAccessObject] getAllProductsFromCompany:self.company ] removeObjectAtIndex:indexPath.row];
+        [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company ] removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -116,16 +106,16 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    id buffer = [[[DataAccessObject sharedDataAccessObject] getAllProductsFromCompany:self.company] objectAtIndex:fromIndexPath.row];
-    [[[DataAccessObject sharedDataAccessObject] getAllProductsFromCompany:self.company] removeObjectAtIndex:fromIndexPath.row];
-    [[[DataAccessObject sharedDataAccessObject] getAllProductsFromCompany:self.company] insertObject:buffer atIndex:toIndexPath.row];
+    id buffer = [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] objectAtIndex:fromIndexPath.row];
+    [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] removeObjectAtIndex:fromIndexPath.row];
+    [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] insertObject:buffer atIndex:toIndexPath.row];
 }
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-    NSMutableArray *productsTemp = [[DataAccessObject sharedDataAccessObject] getAllProductsFromCompany:self.company];
+    NSMutableArray *productsTemp = [[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company];
     Product *product = [productsTemp objectAtIndex:indexPath.row];
     [webVC setUrl:product.productUrl];
     [self.navigationController pushViewController:webVC animated:YES];

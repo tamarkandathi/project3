@@ -19,8 +19,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[DataAccessObject sharedDataAccessObject] retrieveDataFromPlist];
-    [[DataAccessObject sharedDataAccessObject] getStockPrices];
+    [[DataAccessObject sharedDataAccessObject] retrieveData];
+    [[DataAccessObject sharedDataAccessObject] downloadStockPrices];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithTitle:@"+" style:UIBarButtonItemStyleDone target:self action:@selector(addCompany)];
     NSArray *buttons = [[NSArray alloc] initWithObjects:self.editButtonItem, addButton, nil];
     self.navigationItem.rightBarButtonItems = buttons;
@@ -37,13 +37,14 @@
 {
     [super viewWillAppear:animated];
     //BUG - the stock prices dont get updated until we come back to the companies view from child view
-    [[DataAccessObject sharedDataAccessObject] getStockPrices];
+    [[DataAccessObject sharedDataAccessObject] downloadStockPrices];
     [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
+
 #pragma mark Helper methods
 -(void)handleLongPress:(UILongPressGestureRecognizer*)sender {
     if (sender.state == UIGestureRecognizerStateBegan){
@@ -81,7 +82,6 @@
     }
 
     Company *company = [[DataAccessObject sharedDataAccessObject].companies objectAtIndex:[indexPath row]];
-    NSLog(@"company is ----- %@", company.description);
     cell.textLabel.text = company.companyName;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",company.companyStockPrice];
     [[cell imageView] setImage:[UIImage imageNamed:company.companyLogo]];
@@ -99,7 +99,6 @@
         [[DataAccessObject sharedDataAccessObject].companies removeObjectAtIndex: indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
 }
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
