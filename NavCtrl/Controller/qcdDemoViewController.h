@@ -12,7 +12,7 @@
 @class EditCompanyViewController;
 @class ChildViewController;
 
-@interface qcdDemoViewController : UITableViewController
+@interface qcdDemoViewController : UICollectionViewController
 @property (retain, nonatomic) IBOutlet  ChildViewController *childVC;
 @property (retain, nonatomic) NSIndexPath *indexPath;
 @end

@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "qcdDemoViewController.h"
 @class DataAccessObject;
 @class Company;
 @class Product;
 @class WebViewController;
 @class AddProductViewController;
 
-@interface ChildViewController : UITableViewController
+@interface ChildViewController : UICollectionViewController
 @property (strong, nonatomic) Company *company;
-
 @end

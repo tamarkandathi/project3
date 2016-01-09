@@ -14,14 +14,9 @@
 
 - (IBAction)editCompanyName:(id)sender {
     Company *selectedCompany = [[DataAccessObject sharedDataAccessObject].companies objectAtIndex:self.indexPath.row];
-    selectedCompany.companyName = self.editedCompany.text;
+    selectedCompany.companyName = [NSString stringWithFormat:@"%@ (default stock price Apple)",self.editedCompany.text];
     selectedCompany.companyLogo = @"defaultCompanyLogo.jpeg";
-    if ([selectedCompany.companyStockCode isEqualToString:@""]) {
-        selectedCompany.companyStockCode = @"N/A";
-    } else {
-        selectedCompany.companyStockCode = self.editedCompanyStockCode.text;
-    }
-    
+    selectedCompany.companyStockCode = @"AAPL";
     [self.navigationController popViewControllerAnimated:YES];
 }
 

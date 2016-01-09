@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		320519F41C27975A0038BE22 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 320519F31C27975A0038BE22 /* libsqlite3.0.tbd */; };
 		32051A201C2915F40038BE22 /* NavModel.db in Resources */ = {isa = PBXBuildFile; fileRef = 32051A1F1C2915E40038BE22 /* NavModel.db */; };
+		3209B3341C395A9800302BA8 /* ContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3209B3331C395A9800302BA8 /* ContentCell.m */; };
 		326BB7371BC5750D0066295D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326BB7361BC5750D0066295D /* WebKit.framework */; };
 		32D91A511BCD819B0097309F /* defaultCompanyLogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32D91A501BCD819B0097309F /* defaultCompanyLogo.jpeg */; };
 		32D91A581BCDACFA0097309F /* defaultProductLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D91A571BCDACFA0097309F /* defaultProductLogo.png */; };
@@ -72,6 +73,8 @@
 /* Begin PBXFileReference section */
 		320519F31C27975A0038BE22 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		32051A1F1C2915E40038BE22 /* NavModel.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = NavModel.db; sourceTree = "<group>"; };
+		3209B3321C395A9800302BA8 /* ContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentCell.h; sourceTree = "<group>"; };
+		3209B3331C395A9800302BA8 /* ContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentCell.m; sourceTree = "<group>"; };
 		326BB7361BC5750D0066295D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		32D91A501BCD819B0097309F /* defaultCompanyLogo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = defaultCompanyLogo.jpeg; sourceTree = "<group>"; };
 		32D91A571BCDACFA0097309F /* defaultProductLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultProductLogo.png; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 				32DFAE2D1BD3F03F00A7E9DF /* Company.m */,
 				32DFAE301BD3F03F00A7E9DF /* Product.h */,
 				32DFAE311BD3F03F00A7E9DF /* Product.m */,
+				3209B3321C395A9800302BA8 /* ContentCell.h */,
+				3209B3331C395A9800302BA8 /* ContentCell.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -426,6 +431,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3209B3341C395A9800302BA8 /* ContentCell.m in Sources */,
 				32DFAE321BD3F03F00A7E9DF /* AddCompanyViewController.m in Sources */,
 				32DFAE391BD3F04000A7E9DF /* Company.m in Sources */,
 				48A656C518163BF200746D36 /* qcdDemoAppDelegate.m in Sources */,
