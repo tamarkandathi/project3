@@ -16,15 +16,11 @@
 - (IBAction)addNewCompany:(id)sender {
     Company *addedCompany = [[Company alloc] init];
     
-    addedCompany.companyName = self.companyNew.text;
+    addedCompany.companyName = [NSString stringWithFormat:@"%@ (default stock price Apple)",self.companyNew.text];
     addedCompany.companyLogo = @"defaultCompanyLogo.jpeg";
+    addedCompany.companyStockCode = @"AAPL";
     
-    if ([self.companyNewStockCode.text isEqualToString:@""]) {
-        addedCompany.companyStockCode = @"N/A";
-    } else {
-        addedCompany.companyStockCode = self.companyNewStockCode.text;
-    }
-    [[DataAccessObject sharedDataAccessObject].companies addObject:addedCompany];
+    [[DataAccessObject sharedDataAccessObject] addCompany:addedCompany];
     addedCompany.companyProducts = [[NSMutableArray alloc]init];
     [self.navigationController popViewControllerAnimated:YES];
 }

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @class DataAccessObject;
 @class Company;
 @class Product;

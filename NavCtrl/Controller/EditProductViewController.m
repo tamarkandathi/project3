@@ -13,11 +13,12 @@
 @implementation EditProductViewController
 
 - (IBAction)editProductName:(id)sender {
-    Product *selectedProduct = [[Product alloc] init];
+    Product *selectedProduct = [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] objectAtIndex:self.indexPath.row];
+    NSString *productName = selectedProduct.productName;
     selectedProduct.productName = self.editedProduct.text;
     selectedProduct.productLogo = @"defaultProductLogo.png";
     selectedProduct.productUrl = kGenericUrl;
-    [[DataAccessObject sharedDataAccessObject] editProduct:selectedProduct atIndex:self.indexPath fromCompany:self.company];
+    [[DataAccessObject sharedDataAccessObject] editProduct:selectedProduct atIndex:self.indexPath withProductName:productName fromCompany:self.company];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

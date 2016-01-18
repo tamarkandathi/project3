@@ -28,8 +28,7 @@
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
                                                initWithTarget:self action:@selector(handleLongPress:)];
-    longPress.minimumPressDuration = 2.0; //seconds
-    //    longPress.delegate = self;
+    longPress.minimumPressDuration = 2.0;
     [self.tableView addGestureRecognizer:longPress];
     [longPress release];
 }
@@ -40,16 +39,10 @@
     [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - Helper methods
 
 -(void)handleLongPress:(UILongPressGestureRecognizer*)sender {
     if (sender.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"UIGestureRecognizerStateEnded");
-        //Do Whatever You want on End of Gesture
     }
     else if (sender.state == UIGestureRecognizerStateBegan){
         UITableView *tableView = (UITableView *)self.view;
@@ -60,16 +53,12 @@
         editProductVC.indexPath = indexPath;
         [self.navigationController pushViewController:editProductVC animated:YES];
     }
-    
-    
 }
 
 -(void)addProduct {
-
     AddProductViewController *addProductVC = [[AddProductViewController alloc] initWithNibName:@"AddProductViewController" bundle:nil];
     addProductVC.company = self.company;
     [self.navigationController pushViewController:addProductVC animated:YES];
-    
 }
 
 #pragma mark - Table view data source
@@ -107,7 +96,8 @@
 {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company ] removeObjectAtIndex:indexPath.row];
+        Product *product = [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] objectAtIndex:indexPath.row];
+        [[DataAccessObject sharedDataAccessObject] deleteProduct:product forCompany:self.company];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {

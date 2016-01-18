@@ -35,7 +35,7 @@
     self.title = @"Mobile device makers";
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-    longPress.minimumPressDuration = 2.0; //seconds
+    longPress.minimumPressDuration = 2.0;
     
     [self.tableView addGestureRecognizer:longPress];
     [longPress release];
@@ -106,10 +106,9 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [[DataAccessObject sharedDataAccessObject].companies removeObjectAtIndex: indexPath.row];
+        Company *company = [[DataAccessObject sharedDataAccessObject].companies objectAtIndex:indexPath.row];
+        [[DataAccessObject sharedDataAccessObject] deleteCompany:company];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }
 }
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
