@@ -19,12 +19,14 @@
     addedProduct.productName = self.productNew.text;
     addedProduct.productLogo = @"defaultProductLogo";
     addedProduct.productUrl = kGenericUrl;
-    [[DataAccessObject sharedDataAccessObject] addNewProduct:addedProduct toCompany:self.company];
+    [[DataAccessObject sharedDataAccessObject] addProduct:addedProduct toCompany:self.company];
     [self.navigationController popViewControllerAnimated:YES];
+    [addedProduct release];
 }
 
 - (void)dealloc {
     [_productNew release];
+    [_company release];
     [super dealloc];
 }
 

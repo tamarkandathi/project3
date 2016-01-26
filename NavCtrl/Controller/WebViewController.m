@@ -16,21 +16,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.webView = [[WKWebView alloc] initWithFrame:self.view.frame];
-    
+    WKWebView *wv = [[WKWebView alloc] initWithFrame:self.view.frame];
+    self.webView = wv;
+    [wv release];
     NSURLRequest *request = [NSURLRequest requestWithURL: self.pageUrl];
     [self.webView loadRequest:request];
     self.view = self.webView;
     self.webView.frame = self.view.frame;
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)setWebView:(WKWebView*)wv{
+    _webView = wv;
+    [_webView retain];
 }
 
 - (void)dealloc {
     [_webPage release];
+    [_webView release];
     [super dealloc];
 }
 @end

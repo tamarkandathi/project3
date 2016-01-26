@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		320519F41C27975A0038BE22 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 320519F31C27975A0038BE22 /* libsqlite3.0.tbd */; };
-		32051A201C2915F40038BE22 /* NavModel.db in Resources */ = {isa = PBXBuildFile; fileRef = 32051A1F1C2915E40038BE22 /* NavModel.db */; };
 		326BB7371BC5750D0066295D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326BB7361BC5750D0066295D /* WebKit.framework */; };
+		32CDA7181C516D1E00C6FDAC /* NavModel.db in Resources */ = {isa = PBXBuildFile; fileRef = 32CDA7171C516D1E00C6FDAC /* NavModel.db */; };
 		32D91A511BCD819B0097309F /* defaultCompanyLogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 32D91A501BCD819B0097309F /* defaultCompanyLogo.jpeg */; };
 		32D91A581BCDACFA0097309F /* defaultProductLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 32D91A571BCDACFA0097309F /* defaultProductLogo.png */; };
 		32DFAE161BD3F01300A7E9DF /* AddCompanyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32DFAE101BD3F01300A7E9DF /* AddCompanyViewController.xib */; };
@@ -71,8 +71,8 @@
 
 /* Begin PBXFileReference section */
 		320519F31C27975A0038BE22 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		32051A1F1C2915E40038BE22 /* NavModel.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = NavModel.db; sourceTree = "<group>"; };
 		326BB7361BC5750D0066295D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		32CDA7171C516D1E00C6FDAC /* NavModel.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = NavModel.db; path = ../Controller/NavModel.db; sourceTree = "<group>"; };
 		32D91A501BCD819B0097309F /* defaultCompanyLogo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = defaultCompanyLogo.jpeg; sourceTree = "<group>"; };
 		32D91A571BCDACFA0097309F /* defaultProductLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultProductLogo.png; sourceTree = "<group>"; };
 		32DFAE101BD3F01300A7E9DF /* AddCompanyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddCompanyViewController.xib; sourceTree = "<group>"; };
@@ -247,7 +247,7 @@
 		48A656BA18163BF200746D36 /* NavCtrl */ = {
 			isa = PBXGroup;
 			children = (
-				32051A1F1C2915E40038BE22 /* NavModel.db */,
+				32CDA7171C516D1E00C6FDAC /* NavModel.db */,
 				48A656C318163BF200746D36 /* qcdDemoAppDelegate.h */,
 				48A656C418163BF200746D36 /* qcdDemoAppDelegate.m */,
 				48A656C618163BF200746D36 /* Images.xcassets */,
@@ -380,7 +380,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32051A201C2915F40038BE22 /* NavModel.db in Resources */,
 				32F58C841BBE23F400293579 /* HTCLogo.jpeg in Resources */,
 				32F58C961BBE39D000293579 /* GalaxyTab.jpeg in Resources */,
 				32DFAE1B1BD3F01300A7E9DF /* WebViewController.xib in Resources */,
@@ -390,6 +389,7 @@
 				32D91A511BCD819B0097309F /* defaultCompanyLogo.jpeg in Resources */,
 				32F58C811BBE23F400293579 /* AppleLogo.png in Resources */,
 				32F58C911BBE39D000293579 /* HTCDesire816.jpeg in Resources */,
+				32CDA7181C516D1E00C6FDAC /* NavModel.db in Resources */,
 				32DFAE181BD3F01300A7E9DF /* EditCompanyViewController.xib in Resources */,
 				32F58CA11BBE3C1D00293579 /* iPhone.jpeg in Resources */,
 				48A656BF18163BF200746D36 /* InfoPlist.strings in Resources */,

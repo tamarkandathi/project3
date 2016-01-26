@@ -17,8 +17,10 @@
     selectedProduct.productName = self.editedProduct.text;
     selectedProduct.productLogo = @"defaultProductLogo.png";
     selectedProduct.productUrl = kGenericUrl;
-    [[DataAccessObject sharedDataAccessObject] editProduct:selectedProduct atIndex:self.indexPath fromCompany:self.company];
+    selectedProduct.ID = self.productID;
+    [[DataAccessObject sharedDataAccessObject] editProduct:selectedProduct atIndexPath:self.indexPath forCompany:self.company];
     [self.navigationController popViewControllerAnimated:YES];
+    [selectedProduct release];
 }
 
 - (void)dealloc {

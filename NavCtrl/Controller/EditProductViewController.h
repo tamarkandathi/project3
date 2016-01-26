@@ -14,8 +14,8 @@
 
 @property (retain, nonatomic) IBOutlet UITextField *editedProduct;
 @property (retain, nonatomic) NSIndexPath *indexPath;
-@property (strong, nonatomic) Company *company;
-
+@property (retain, nonatomic) Company *company;
 - (IBAction)editProductName:(id)sender;
 
+@property(nonatomic) int productID;
 @end

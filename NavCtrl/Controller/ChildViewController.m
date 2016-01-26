@@ -1,3 +1,4 @@
+
 //
 //  ChildViewController.m
 //  NavCtrl
@@ -28,9 +29,9 @@
     
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
                                                initWithTarget:self action:@selector(handleLongPress:)];
-    longPress.minimumPressDuration = 2.0; //seconds
-    //    longPress.delegate = self;
+    longPress.minimumPressDuration = 2.0;
     [self.tableView addGestureRecognizer:longPress];
+    [buttons release];
     [longPress release];
 }
 
@@ -40,25 +41,19 @@
     [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 -(void)handleLongPress:(UILongPressGestureRecognizer*)sender {
-    if (sender.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"UIGestureRecognizerStateEnded");
-        //Do Whatever You want on End of Gesture
-    }
-    else if (sender.state == UIGestureRecognizerStateBegan){
+   if (sender.state == UIGestureRecognizerStateBegan){
         UITableView *tableView = (UITableView *)self.view;
         CGPoint point = [sender locationInView:tableView];
         NSIndexPath *indexPath = [tableView indexPathForRowAtPoint:point];
+       Product *product = [self.company.companyProducts objectAtIndex:[indexPath row]];
         EditProductViewController *editProductVC = [[EditProductViewController alloc] initWithNibName:@"EditProductViewController" bundle:nil];
         editProductVC.company = self.company;
         editProductVC.indexPath = indexPath;
+        editProductVC.productID = product.ID;
         [self.navigationController pushViewController:editProductVC animated:YES];
+       [editProductVC release];
     }
     
     
@@ -69,6 +64,7 @@
     AddProductViewController *addProductVC = [[AddProductViewController alloc] initWithNibName:@"AddProductViewController" bundle:nil];
     addProductVC.company = self.company;
     [self.navigationController pushViewController:addProductVC animated:YES];
+    [addProductVC release];
     
 }
 
@@ -89,12 +85,15 @@
     static NSString *cellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
     }
     
     Product *product = [self.company.companyProducts objectAtIndex:[indexPath row]];
     cell.textLabel.text = product.productName;
-    [[cell imageView] setImage:[UIImage imageNamed:product.productLogo]];
+    
+    UIImage *logo = [UIImage imageNamed:product.productLogo];
+    [[cell imageView] setImage: logo];
+    
     return cell;
 }
 
@@ -107,18 +106,21 @@
 {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company ] removeObjectAtIndex:indexPath.row];
+        Product *product = [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] objectAtIndex:indexPath.row];
+        [[DataAccessObject sharedDataAccessObject] deleteProduct: product atIndexPath:indexPath forCompany:self.company];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-    }   
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    id buffer = [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] objectAtIndex:fromIndexPath.row];
+    Product *prodA = [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] objectAtIndex:fromIndexPath.row];
+    Product *prodB = [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] objectAtIndex:toIndexPath.row];
+    [prodA retain];
     [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] removeObjectAtIndex:fromIndexPath.row];
-    [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] insertObject:buffer atIndex:toIndexPath.row];
+    [[[DataAccessObject sharedDataAccessObject] getAllProductsForCompany:self.company] insertObject:prodA atIndex:toIndexPath.row];
+    [[DataAccessObject sharedDataAccessObject] swapProducts:prodA :prodB];
+    [prodA release];
 }
 
 #pragma mark - Table view delegate
@@ -129,6 +131,7 @@
     Product *product = [productsTemp objectAtIndex:indexPath.row];
     [webVC setUrl:product.productUrl];
     [self.navigationController pushViewController:webVC animated:YES];
+    [webVC release];
 }
  
 

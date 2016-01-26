@@ -14,7 +14,7 @@
 @interface AddProductViewController : UIViewController
 
 @property (retain, nonatomic) IBOutlet UITextField *productNew;
-@property (strong,nonatomic) Company *company;
+@property (retain,nonatomic) Company *company;
 - (IBAction)addNewProduct:(id)sender;
 
 @end

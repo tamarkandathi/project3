@@ -14,6 +14,6 @@
 @class AddProductViewController;
 
 @interface ChildViewController : UITableViewController
-@property (strong, nonatomic) Company *company;
+@property (retain, nonatomic) Company *company;
 
 @end

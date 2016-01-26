@@ -14,19 +14,16 @@
 @implementation AddCompanyViewController
 
 - (IBAction)addNewCompany:(id)sender {
-    Company *addedCompany = [[Company alloc] init];
+    Company *company = [[Company alloc] init];
     
-    addedCompany.companyName = self.companyNew.text;
-    addedCompany.companyLogo = @"defaultCompanyLogo.jpeg";
-    
-    if ([self.companyNewStockCode.text isEqualToString:@""]) {
-        addedCompany.companyStockCode = @"N/A";
-    } else {
-        addedCompany.companyStockCode = self.companyNewStockCode.text;
-    }
-    [[DataAccessObject sharedDataAccessObject].companies addObject:addedCompany];
-    addedCompany.companyProducts = [[NSMutableArray alloc]init];
+    company.companyName = [NSString stringWithFormat:@"%@ (default stock price Apple)",self.companyNew.text];
+    company.companyLogo = @"defaultCompanyLogo.jpeg";
+    company.companyStockCode = @"AAPL";
+    [[DataAccessObject sharedDataAccessObject] addCompany:company];
+    company.companyProducts = [[[NSMutableArray alloc]init] autorelease];
     [self.navigationController popViewControllerAnimated:YES];
+    
+    [company release];
 }
 
 - (void)dealloc {

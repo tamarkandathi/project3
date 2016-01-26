@@ -15,10 +15,20 @@ extern NSString *downloadStockPricesNotification;
 @interface DataAccessObject : NSObject
 @property (retain, nonatomic) NSMutableArray *companies;
 
--(void) editProduct: (Product*) product atIndex:(NSIndexPath*) indexPath fromCompany:(Company*) company;
--(void) addNewProduct:(Product*) product toCompany:(Company*) company;
+-(void) addProduct:(Product*) product toCompany:(Company*) company;
 -(NSMutableArray*) getAllProductsForCompany:(Company*) company;
 +(instancetype) sharedDataAccessObject;
 -(NSMutableArray*)retrieveData;
 -(void) downloadStockPrices;
+
+-(void)editProduct:(Product *)product atIndexPath:(NSIndexPath *)indexPath forCompany:(Company *)company;
+
+-(void) deleteCompany:(Company *) company;
+-(void) deleteProduct:(Product*) product atIndexPath:(NSIndexPath*) indexPath forCompany:(Company*) company;
+-(void) addCompany: (Company*) company;
+-(void) editCompany:(Company *) company atIndex: (NSIndexPath*) indexPath;
+-(void) swapCompanies:(Company*) companyA :(Company*) companyB;
+-(void) swapProducts:(Product*) productA :(Product*) productB;
+
+
 @end
