@@ -13,6 +13,7 @@
 #import <CoreData/CoreData.h>
 #import "ManagedCompany.h"
 #import "ManagedProduct.h"
+#import "AFNetworking.h"
 NSString *kGenericUrl = @"http://turntotech.io/";
 NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
 @implementation DataAccessObject
@@ -159,22 +160,23 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
 }
 
 -(void) downloadStockPrices {
-    NSString *stockCodesURL = @"";
+    NSString *stockCodesUrlString = @"";
 
     for(int i = 0;i < self.companies.count;i++) {
         Company *company = [self.companies objectAtIndex:i];
-        stockCodesURL = [stockCodesURL stringByAppendingString:company.companyStockCode];
+        stockCodesUrlString = [stockCodesUrlString stringByAppendingString:company.companyStockCode];
         if (i != [self.companies count] - 1) {
-            stockCodesURL = [stockCodesURL stringByAppendingString:@"+"];
+            stockCodesUrlString = [stockCodesUrlString stringByAppendingString:@"+"];
         }
     }
     
-    stockCodesURL = [NSString stringWithFormat:@"http://finance.yahoo.com/d/quotes.csv?s=%@&f=a",stockCodesURL];
-    
+    stockCodesUrlString = [NSString stringWithFormat:@"http://finance.yahoo.com/d/quotes.csv?s=%@&f=a",stockCodesUrlString];
+/*
     NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:stockCodesURL] completionHandler:
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:stockCodesUrlString] completionHandler:
                                       ^(NSData *data, NSURLResponse *response, NSError *error){
                                           if (!error) {
+                                              NSLog(@"data ------ %@\nresponse ------ %@", data, response);
                                               NSString *stocks = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
                                               NSMutableArray *companyStockPrices = (NSMutableArray*)[stocks componentsSeparatedByString:@"\n"];
                                               [companyStockPrices removeLastObject];
@@ -195,6 +197,34 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
                                           }
                                       }];
         [dataTask resume];
+*/
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:stockCodesUrlString]];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    AFHTTPResponseSerializer *serializer = [AFHTTPResponseSerializer serializer];
+    serializer.acceptableContentTypes = [NSSet setWithObject: @"text/plain"];
+    manager.responseSerializer = serializer;
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if (!error) {
+            NSData *data = responseObject;
+            NSString *stocks = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+            NSMutableArray *companyStockPrices = (NSMutableArray*)[stocks componentsSeparatedByString:@"\n"];
+              [companyStockPrices removeLastObject];
+              for (int i = 0; i < self.companies.count; i++) {
+                  Company *company = [self.companies objectAtIndex:i];
+                  if (companyStockPrices[i] != nil) {
+                      company.companyStockPrice = companyStockPrices[i];
+                  } else {
+                      company.companyStockPrice = @"N/A";
+                  }
+              }
+              [[NSNotificationCenter defaultCenter] postNotificationName:downloadStockPricesNotification object: self];
+            
+        } else {
+            NSLog(@"error - %@", error.userInfo);
+        }
+    }];
+    [dataTask resume];
 }
 
 -(NSMutableArray*)retrieveData {
