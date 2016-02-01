@@ -12,4 +12,16 @@ NSString *kGenericUrl = @"http://turntotech.io/";
 
 @implementation Product
 
+-(void)dealloc{
+    [_productName release];
+    _productName = nil;
+    [_productLogo release];
+    _productLogo = nil;
+    
+    [_productUrl release];
+    _productUrl = nil;
+    
+    [super dealloc];
+}
+
 @end

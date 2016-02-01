@@ -45,30 +45,26 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
         NSString *updateA  = [NSString stringWithFormat:@"UPDATE companies SET company_name = '%s', company_logo = '%s', company_stockcode = '%s'  WHERE id = '%d'", [companyB.companyName UTF8String], [companyB.companyLogo UTF8String], [companyB.companyStockCode UTF8String], companyA.ID];
         const char *updateAStatement = [updateA UTF8String];
         if (sqlite3_exec(companiesDB, updateAStatement, NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"company updated");
+        
         }
         NSString *updateB  = [NSString stringWithFormat:@"UPDATE companies SET company_name = '%s', company_logo = '%s', company_stockcode = '%s'  WHERE id = '%d'", [buffer.companyName UTF8String], [buffer.companyLogo UTF8String], [buffer.companyStockCode UTF8String], companyB.ID];
         const char *updateBStatement = [updateB UTF8String];
         if (sqlite3_exec(companiesDB, updateBStatement, NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"companyID updated");
         }
     
         NSString *productsA = [NSString stringWithFormat:@"UPDATE products SET company_id = '%d' WHERE company_id == '%d'",0, companyA.ID];
         const char *productsAStatement = [productsA UTF8String];
         if (sqlite3_exec(companiesDB, productsAStatement, NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"A.ID = 0 now");
         }
         
         NSString *productsB = [NSString stringWithFormat:@"UPDATE products SET company_id = '%d' WHERE company_id == '%d'",companyA.ID, companyB.ID];
         const char *productsBStatement = [productsB UTF8String];
         if (sqlite3_exec(companiesDB, productsBStatement, NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"got here");
         }
         
         NSString *productsTemp = [NSString stringWithFormat:@"UPDATE products SET company_id == '%d' WHERE company_id == '%d'",companyB.ID, 0];
         const char *productsTempStatement = [productsTemp UTF8String];
         if (sqlite3_exec(companiesDB, productsTempStatement, NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"products done");
         }
     }
     
@@ -92,12 +88,10 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
         NSString *updateA  = [NSString stringWithFormat:@"UPDATE products SET product_name = '%s', product_logo = '%s', product_url = '%s'  WHERE id = '%d'", [productB.productName UTF8String], [productB.productLogo UTF8String], [productB.productUrl UTF8String], productA.ID];
         const char *updateAStatement = [updateA UTF8String];
         if (sqlite3_exec(companiesDB, updateAStatement, NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"product updated");
         }
         NSString *updateB  = [NSString stringWithFormat:@"UPDATE products SET product_name = '%s', product_logo = '%s', product_url = '%s'  WHERE id = '%d'", [buffer.productName UTF8String], [buffer.productLogo UTF8String], [buffer.productUrl UTF8String], productB.ID];
         const char *updateBStatement = [updateB UTF8String];
         if (sqlite3_exec(companiesDB, updateBStatement, NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"products updated");
         }
     }
     sqlite3_close(companiesDB);
@@ -117,7 +111,6 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
         
         if (sqlite3_exec(companiesDB, insertStatement, NULL, NULL, &error) == SQLITE_OK) {
             company.ID = (int) sqlite3_last_insert_rowid(companiesDB);
-            NSLog(@"company id is assigned  = %d inserted", company.ID);
         }
     }
     sqlite3_close(companiesDB);
@@ -143,7 +136,6 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
     }
     
     sqlite3_close(companiesDB);
-    [company.companyProducts removeAllObjects];
     [self.companies removeObject:company];
     
 }
@@ -155,10 +147,8 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
     
     if (sqlite3_open(databasePath, &companiesDB) == SQLITE_OK) {
         NSString *updateCompany  = [NSString stringWithFormat:@"UPDATE companies SET company_name = '%s', company_logo = '%s', company_stockcode = '%s'  WHERE id = '%d'", [company.companyName UTF8String], [company.companyLogo UTF8String], [company.companyStockCode UTF8String], company.ID];
-        NSLog(@"indexPath.row = %ld",(long)indexPath.row);
         const char *updateCompanyStatement = [updateCompany UTF8String];
         if (sqlite3_exec(companiesDB, updateCompanyStatement, NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"company updated");
         }
     }
 
@@ -217,7 +207,6 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
         NSString *updateProduct  = [NSString stringWithFormat:@"UPDATE products SET product_name = '%s', product_logo = '%s', product_url = '%s' WHERE id == '%d'", [product.productName UTF8String], [product.productLogo UTF8String], [product.productUrl UTF8String], product.ID];
         const char *updateProductCString = [updateProduct UTF8String];
         if (sqlite3_exec(companiesDB, updateProductCString, NULL, NULL, &error) == SQLITE_OK) {
-            NSLog(@"product updated");
         }
     }
     sqlite3_close(companiesDB);
@@ -299,7 +288,6 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
                         product.ID = (int) [productIDString integerValue];
                         product.companyID = company.ID;
                         [company.companyProducts addObject:product];
-                        NSLog(@"companyName = %@ companyID = %d productName = %@ productID = %d", company.companyName, company.ID, product.productName, product.ID);
                         [product release];
                     }
                 }
@@ -328,7 +316,6 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
             NSLog(@"%@", error.localizedDescription);
         }
     }
-//    NSLog(@"database path = %@", destinationPath);
     return destinationPath;
 }
 
