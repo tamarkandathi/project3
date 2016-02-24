@@ -316,6 +316,7 @@ NSString *downloadStockPricesNotification = @"downloadStockPricesNotification";
             NSLog(@"%@", error.localizedDescription);
         }
     }
+    NSLog(@"%@",destinationPath);
     return destinationPath;
 }
 

@@ -15,17 +15,13 @@
 {
     
     // Override point for customization after application launch.
-    UIViewController *controller =
-    [[qcdDemoViewController alloc]
-      initWithNibName:@"qcdDemoViewController" bundle:nil];
+    UIViewController *controller = [[qcdDemoViewController alloc] initWithNibName:@"qcdDemoViewController" bundle:nil];
     UIViewController *rootController = controller;
     
-    UINavigationController  *navigationController = [[UINavigationController alloc]
-                            initWithRootViewController:rootController];
+    UINavigationController  *navigationController = [[UINavigationController alloc] initWithRootViewController:rootController];
     self.navigationController = navigationController;
     
-    UIWindow *window = [[UIWindow alloc]
-                   initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window = window;
     [self.window setRootViewController:self.navigationController];
     [self.window makeKeyAndVisible];

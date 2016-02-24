@@ -50,6 +50,7 @@
 {
     [super viewWillAppear:animated];
     [[DataAccessObject sharedDataAccessObject] downloadStockPrices];
+    [self reloadData];
 }
 - (void)didReceiveMemoryWarning
 {

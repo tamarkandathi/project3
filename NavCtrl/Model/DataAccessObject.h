@@ -21,12 +21,12 @@ extern NSString *downloadStockPricesNotification;
 -(NSMutableArray*)retrieveData;
 -(void) downloadStockPrices;
 
--(void)editProduct:(Product *)product atIndexPath:(NSIndexPath *)indexPath forCompany:(Company *)company;
 
--(void) deleteCompany:(Company *) company;
--(void) deleteProduct:(Product*) product atIndexPath:(NSIndexPath*) indexPath forCompany:(Company*) company;
 -(void) addCompany: (Company*) company;
+-(void) deleteCompany:(Company *) company;
 -(void) editCompany:(Company *) company atIndex: (NSIndexPath*) indexPath;
+-(void) deleteProduct:(Product*) product atIndexPath:(NSIndexPath*) indexPath forCompany:(Company*) company;
+-(void) editProduct:(Product *)product atIndexPath:(NSIndexPath *)indexPath forCompany:(Company *)company;
 -(void) swapCompanies:(Company*) companyA :(Company*) companyB;
 -(void) swapProducts:(Product*) productA :(Product*) productB;
 
